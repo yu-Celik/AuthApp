@@ -7,7 +7,7 @@ import { Card } from "@/components/ui/card"
 import { FlexCol } from "@/components/ui/containers"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
-import SubmitButton from '@/app/components/submit-button'
+import SubmitButton from '@/app/components/auth/submit-button'
 import { newPassword } from "@/app/actions/auth"
 import BackLogin from "@/app/components/auth/back-login"
 export function NewPasswordForm() {

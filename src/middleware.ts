@@ -24,7 +24,7 @@ export default auth((req) => {
     // Gestion des routes d'authentification
     if (isAuthRoute) {
         if (isLoggedIn) {
-            return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
+            return NextResponse.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
         }
         return NextResponse.next();
     }
@@ -32,7 +32,7 @@ export default auth((req) => {
     // Redirection vers la page de connexion si l'utilisateur n'est pas connecté et que la route n'est pas publique
     if (!isLoggedIn && !isPublicRoute) {
         console.log('redirect to signin');
-        return Response.redirect(new URL('/auth/signin', nextUrl));
+        return NextResponse.redirect(new URL('/auth/signin', nextUrl));
     }
     return NextResponse.next();
 });
