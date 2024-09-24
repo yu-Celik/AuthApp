@@ -58,7 +58,7 @@ function Demo_Dashboard({ user }: { user: User }) {
     <Dashboard>
       <DashboardContainer>
         <DashboardHeader>
-          <Card className="bg-white dark:bg-gray-800 shadow-md rounded-lg p-6 min-w-[50%]">
+          <Card className="bg-white dark:bg-gray-800 shadow-md rounded-lg p-6 w-full lg:max-w-[50%]">
             <CardHeader>
               <CardTitle className="text-2xl font-bold text-gray-800 dark:text-white">
                 Bienvenue :
@@ -68,7 +68,7 @@ function Demo_Dashboard({ user }: { user: User }) {
           </Card>
         </DashboardHeader>
         <DashboardBody>
-          <Card className="bg-white dark:bg-gray-800 shadow-md rounded-lg p-6 min-w-[50%]">
+          <Card className="bg-white dark:bg-gray-800 shadow-md rounded-lg p-6 w-full lg:max-w-[50%]">
             <CardHeader>
               <CardTitle className="text-2xl font-bold mb-4 text-gray-800 dark:text-white">
                 Profil Utilisateur

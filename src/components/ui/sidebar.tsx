@@ -99,7 +99,7 @@ export function MobileSidebar({ className, children, ...props }: TMobileSidebar)
     <>
       <div
         className={cn(
-          "h-10 p-4 flex flex-row md:hidden  items-center justify-between bg-card/70 w-full",
+          "h-10 p-4 flex flex-row md:hidden  items-center justify-between bg-card/80 w-full",
         )}
         {...props}
       >
@@ -117,7 +117,7 @@ export function MobileSidebar({ className, children, ...props }: TMobileSidebar)
                 ease: "easeInOut",
               }}
               className={cn(
-                "fixed h-full w-full inset-0 bg-card/70 p-10 z-[100] flex flex-col justify-between",
+                "fixed h-full w-full inset-0 bg-card/80 p-10 z-[100] flex flex-col justify-between backdrop-blur-sm",
                 className,
               )}
             >

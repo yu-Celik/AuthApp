@@ -12,7 +12,7 @@ function createContext<ContextValueType extends object | null>(
 
     const value = React.useMemo(
       () => context,
-      Object.values(context),
+      [context],
     ) as ContextValueType;
     return <Context.Provider value={value}>{children}</Context.Provider>;
   }
@@ -74,7 +74,7 @@ function createContextScope(
 
       const value = React.useMemo(
         () => context,
-        Object.values(context),
+        [context],
       ) as ContextValueType;
       return <Context.Provider value={value}>{children}</Context.Provider>;
     }

@@ -85,7 +85,7 @@ const internalClassed = <
 
       const merged = useMemo(
         () => merger(className, variantClassNames, cName),
-        [className, cName, variantClassNames],
+        [cName, variantClassNames],
       );
 
       return (
