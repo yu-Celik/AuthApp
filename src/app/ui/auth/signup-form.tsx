@@ -17,12 +17,12 @@ import { useRouter } from 'next/navigation'
 import { resendVerificationEmail } from '@/app/libs/mail'
 import { Loader2, Mail, RefreshCw } from 'lucide-react'
 import Link from 'next/link'
-
+import PasswordInput from '@/app/components/auth/password-input'
 export function SignupForm() {
 
     const [step, setStep] = useState(1)
     const [isPending, startTransition] = useTransition()
-
+    const [password, setPassword] = useState('')
     const [email, setEmail] = useState('')
     const [state, action] = useFormState(signup, null)
     const [errorResend, setErrorResend] = useState('')
@@ -85,13 +85,21 @@ export function SignupForm() {
         }
     }
 
+    const handlePasswordChange = (value: string) => {
+        setPassword(value)
+        if (state?.errors?.password) {
+            state.errors.password = []
+        }
+    }
+
     return (
         <>
             <Card className="w-[350px]">
                 {step === 1 ? (
                     <EmailStep email={email} setEmail={setEmail} onSubmit={handleContinue} />
                 ) : step === 2 ? (
-                    <form action={action} aria-labelledby="signup-form">
+                    <form action={action} aria-labelledby="signup-form" noValidate>
+
                         <FlexCol className="mb-4 gap-2">
                             <Label htmlFor="email">Email</Label>
                             <Input
@@ -102,6 +110,7 @@ export function SignupForm() {
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 aria-required="true"
+                                autoComplete='email'
                             />
                             {state?.errors?.email && (
                                 <p className="text-sm text-red-500" role="alert">{state.errors.email}</p>
@@ -109,23 +118,22 @@ export function SignupForm() {
                         </FlexCol>
                         <FlexCol className="mb-4 gap-2">
                             <Label htmlFor="username">Nom d&apos;utilisateur</Label>
-                            <Input id="username" name="username" placeholder="johndoe" aria-required="true" />
+                            <Input id="username" name="username" placeholder="johndoe" aria-required="true" autoComplete='username' />
                             {state?.errors?.username && (
                                 <p className="text-sm text-red-500" role="alert">{state.errors.username}</p>
                             )}
                         </FlexCol>
                         <FlexCol className="my-4 gap-2">
-                            <Label htmlFor="password">Mot de passe</Label>
-                            <Input id="password" name="password" type="password" aria-required="true" placeholder='********' />
+                            <PasswordInput
+                                value={password}
+                                onChange={handlePasswordChange}
+                            />
                             {state?.errors?.password && (
                                 <ul className="text-sm text-red-500 list-disc list-inside" role="alert">
                                     {state.errors.password.map((error, index) => (
                                         <li key={index}>{error}</li>
                                     ))}
                                 </ul>
-                            )}
-                            {state?.errors?._form && (
-                                <p className="text-sm text-red-500" role="alert">{state.errors._form}</p>
                             )}
                             {state?.success && (
                                 <p className="text-sm text-green-500" role="alert">{state.success}</p>
@@ -176,7 +184,7 @@ export function SignupForm() {
                     </FlexCol>
                 )}
 
-                {step === 2 && <FooterForm mode='signup' />}
+                {step < 3 && <FooterForm mode='signup' />}
             </Card>
         </>
     )

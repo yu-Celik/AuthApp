@@ -57,3 +57,7 @@
     @apply bg-background text-foreground;
   }
 }
+
+.input-placeholder-hidden::placeholder {
+  opacity: 0;
+}

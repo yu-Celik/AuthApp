@@ -57,10 +57,7 @@ export default async function DashboardLayout() {
                     </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                    <ProfileField
-                        label="Nom d'utilisateur"
-                        value={session?.user?.username}
-                    />
+                    <ProfileField label="Nom d'utilisateur" value={session?.user?.username} />
                     <ProfileField label="Email" value={session?.user?.email} />
                     <ProfileField label="Rôle" value={getRoleLabel(session?.user?.role as UserRole)} />
                     <ProfileField label="Email vérifié" value={formatDate(session?.user?.emailVerified as Date)} />

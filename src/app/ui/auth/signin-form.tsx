@@ -35,7 +35,7 @@ export function SigninForm() {
                 {step === 1 ? (
                     <EmailStep email={email} setEmail={setEmail} onSubmit={handleContinue} />
                 ) : (
-                    <form action={action}>
+                    <form action={action} noValidate>
                         <FlexCol className="mb-4 gap-2">
                             <Label htmlFor="email">Email</Label>
                             <Input
@@ -46,6 +46,7 @@ export function SigninForm() {
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 aria-required="true"
+                                autoComplete='email'
                             />
                         </FlexCol>
                         <FlexCol className="mb-4 gap-2">

@@ -33,17 +33,18 @@ export function EmailStep({ email, setEmail, onSubmit, resetPassword = false, ac
 
     return (
 
-        <form action={action} onSubmit={onSubmit} className="flex flex-col gap-2">
+        <form action={action} onSubmit={onSubmit} className="flex flex-col gap-2" noValidate>
             <FlexCol className="mb-2 gap-2">
                 <Label htmlFor="email">Email</Label>
                 <Input
                     id="email"
                     name="email"
-                    type="text"
+                    type="email"
                     placeholder="m@example.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     aria-required="true"
+                    autoComplete='email'
                 />
             </FlexCol>
             {resetPassword ?

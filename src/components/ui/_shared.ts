@@ -8,8 +8,8 @@ export const STYLES = {
   ACCENT: "focus:bg-accent focus:text-accent-foreground",
   ACCENT_FOCUS: "focus:bg-accent focus:text-accent-foreground",
   ACCENT_STATE_OPEN: "focus:bg-accent data-[state=open]:bg-accent",
-  // BORDER_INPUT: "border border-input",
-  BORDER_INPUT: "border",
+  BORDER_INPUT: "border border-input",
+  // BORDER_INPUT: "border",
   CURSOR_DEFAULT: "cursor-default",
   DISABLED_NOT_ALLOWED: "disabled:cursor-not-allowed disabled:opacity-50",
   DISABLED_EVENTS_NONE: "disabled:pointer-events-none disabled:opacity-50",
@@ -28,7 +28,7 @@ export const STYLES = {
   GRID_START: "grid w-full grid-cols-1 items-start",
   GROUP_RELATIVE: "group relative",
   SIZE_FULL: "h-full w-full",
-  TEXT_MUTED_PLACEHOLDER: "placeholder:text-muted-foreground",
+  TEXT_MUTED_PLACEHOLDER: "placeholder:text-muted-foreground/60",
   MARQUEE: "pointer-events-none absolute from-white dark:from-background",
   // DATA STATES
   DATA_STATE_CHECKED:

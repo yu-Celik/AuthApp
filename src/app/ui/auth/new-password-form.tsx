@@ -10,12 +10,13 @@ import { Input } from "@/components/ui/input"
 import SubmitButton from '@/app/components/auth/submit-button'
 import { newPassword } from "@/app/actions/auth"
 import BackLogin from "@/app/components/auth/back-login"
+import PasswordInput from "@/app/components/auth/password-input"
+
 export function NewPasswordForm() {
     const [password, setPassword] = useState('')
     const [state, action] = useFormState(newPassword, null)
     const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState<string | null>(null)
-
     const searchParams = useSearchParams()
     const token = searchParams.get("token")
     const router = useRouter()
@@ -48,18 +49,12 @@ export function NewPasswordForm() {
     return (
         <>
             <Card className="w-[350px]">
-                <form action={action} className="flex flex-col gap-2">
+                <form action={action} className="flex flex-col gap-2" noValidate>
                     <input type="hidden" name="token" value={token as string} />
                     <FlexCol className="mb-2 gap-2">
-                        <Label htmlFor="password">Nouveau mot de passe</Label>
-                        <Input
-                            id="password"
-                            name="password"
-                            type="password"
-                            placeholder="********"
+                        <PasswordInput
                             value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            aria-required="true"
+                            onChange={setPassword}
                         />
                     </FlexCol>
                     <FlexCol className="gap-2">
