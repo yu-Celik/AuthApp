@@ -1,20 +1,12 @@
-import { motion } from "framer-motion";
-import Link from "next/link";
-import { useState } from "react";
-import { signOut } from "next-auth/react"
 import { clx } from "@/libs/utils/clx/clx-merge";
-import { cn } from "@/libs/utils/core/cn";
-import ArrowLeft from "@/components/icons/arrow-left";
-import SettingsIcon from "@/components/icons/settings";
-import Terminal from "@/components/icons/terminal";
-import UserPlus from "@/components/icons/user-plus";
-import { Sidebar, SidebarBody, SidebarLink } from "@/components/ui/sidebar";
-import { User, UserRole } from "@prisma/client";
-import Image from "next/image";
+import { UserRole } from "@prisma/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import ProfileField from "@/app/components/dashboard/profile-field";
 import { auth } from "@/libs/next-auth";
 import type { Metadata } from "next";
+import { format } from 'date-fns';
+import { fr } from 'date-fns/locale';
+import { toZonedTime } from 'date-fns-tz';
 
 export const metadata: Metadata = {
     title: "Dashboard",
@@ -34,13 +26,9 @@ const getRoleLabel = (role: UserRole): string => {
 
 const formatDate = (date: Date | null): string => {
     if (!date) return 'Jamais';
-    return new Date(date).toLocaleDateString('fr-FR', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit'
-    });
+    const timeZone = 'Europe/Paris';
+    const zonedDate = toZonedTime(date, timeZone);
+    return format(zonedDate, 'd MMMM yyyy HH:mm', { locale: fr });
 };
 
 

@@ -3,14 +3,13 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { ReactNode, useState } from "react";
 import { signOut } from "next-auth/react"
-import { clx } from "@/libs/utils/clx/clx-merge";
 import { cn } from "@/libs/utils/core/cn";
 import ArrowLeft from "@/components/icons/arrow-left";
 import SettingsIcon from "@/components/icons/settings";
 import Terminal from "@/components/icons/terminal";
 import UserPlus from "@/components/icons/user-plus";
 import { Sidebar, SidebarBody, SidebarLink } from "@/components/ui/sidebar";
-import { User, UserRole } from "@prisma/client";
+import { User } from "@prisma/client";
 import Image from "next/image";
 
 type Props = {
