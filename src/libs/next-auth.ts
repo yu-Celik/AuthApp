@@ -26,11 +26,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     adapter: PrismaAdapter(prisma),
     callbacks: {
         async jwt({ token, user, account, profile }) {
-            console.log('token dans jwt', token);
-            console.log('user dans jwt', user);
-            console.log('account dans jwt', account);
-            console.log('profile dans jwt', profile);
-
             if (!token.sub) return token
 
             if (account?.provider !== "credentials") {
@@ -50,9 +45,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             return token
         },
         async session({ session, token }) {
-            console.log('token dans session', token);
-            console.log('session dans session', session);
-
             if (token.sub && session.user) {
                 session.user.id = token.sub;
                 session.user.role = token.role as UserRole;
@@ -98,7 +90,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             }
 
             if (!user || !user.emailVerified) {
-                console.log('user not verified');
                 return false;
             }
             return true;

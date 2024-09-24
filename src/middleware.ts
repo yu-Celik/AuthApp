@@ -31,7 +31,6 @@ export default auth((req) => {
 
     // Redirection vers la page de connexion si l'utilisateur n'est pas connecté et que la route n'est pas publique
     if (!isLoggedIn && !isPublicRoute) {
-        console.log('redirect to signin');
         return NextResponse.redirect(new URL('/auth/signin', nextUrl));
     }
     return NextResponse.next();
