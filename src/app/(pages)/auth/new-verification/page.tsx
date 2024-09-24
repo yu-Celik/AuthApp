@@ -1,6 +1,6 @@
 import { Metadata } from "next"
 import { NewVerificationForm } from "@/app/ui/auth/verification-form"
-
+import { Suspense } from "react";
 export const metadata: Metadata = {
     title: "Nouvelle vérification",
     description: "Vérifiez votre compte",
@@ -19,7 +19,9 @@ export default function NewVerificationPage() {
                         Veuillez vérifier votre compte pour continuer
                     </p>
                 </div>
-                <NewVerificationForm />
+                <Suspense fallback={<div>Loading...</div>}>
+                    <NewVerificationForm />
+                </Suspense>
             </div>
         </div>
     )

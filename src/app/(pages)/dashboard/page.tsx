@@ -14,6 +14,13 @@ import Image from "next/image";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import ProfileField from "@/app/components/dashboard/profile-field";
 import { auth } from "@/libs/next-auth";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Dashboard",
+    description: "Dashboard page",
+};
+
 const getRoleLabel = (role: UserRole): string => {
     switch (role) {
         case 'ADMIN':

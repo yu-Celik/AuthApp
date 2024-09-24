@@ -1,13 +1,14 @@
 'use client'
-import { useSearchParams } from 'next/navigation'
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { AlertCircle } from "lucide-react"
-import Link from 'next/link'
+import { Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { AlertCircle } from "lucide-react";
+import Link from 'next/link';
 
-export default function AuthError() {
-    const searchParams = useSearchParams()
-    const error = searchParams.get('error')
+function AuthErrorContent() {
+    const searchParams = useSearchParams();
+    const error = searchParams.get('error');
 
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -30,11 +31,19 @@ export default function AuthError() {
                     </p>
                 </CardContent>
                 <CardFooter>
-                    <Button asChild className="w-full mx-12" >
+                    <Button asChild className="w-full mx-12">
                         <Link href="/auth/signin">Retour à la page de connexion</Link>
                     </Button>
                 </CardFooter>
             </Card>
         </div>
-    )
+    );
+}
+
+export default function AuthError() {
+    return (
+        <Suspense fallback={<div>Chargement...</div>}>
+            <AuthErrorContent />
+        </Suspense>
+    );
 }

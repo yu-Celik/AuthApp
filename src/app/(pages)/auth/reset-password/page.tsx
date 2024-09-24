@@ -1,9 +1,12 @@
 import { ResetPasswordForm } from "@/app/ui/auth/reset-password-form"
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Reset Password",
+    description: "Reset Password page",
+};
 
 function page() {
-
-
-
     return (
 
         <div className="container flex flex-col h-lvh items-center justify-center">

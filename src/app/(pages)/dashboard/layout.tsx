@@ -15,6 +15,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { auth } from "@/libs/next-auth";
 import DashboardHeader from "@/app/components/dashboard/header";
 import DashboardSidebar from "@/app/components/dashboard/sidebar";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Dashboard",
+    description: "Dashboard page",
+};
 
 const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
     const session = await auth();

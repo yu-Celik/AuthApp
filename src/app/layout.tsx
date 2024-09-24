@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 
@@ -16,7 +16,12 @@ const geistMono = localFont({
 export const metadata: Metadata = {
   title: "Mon Application Next.js",
   description: "Une application d'authentification sécurisée construite avec Next.js et Prisma",
-  viewport: "width=device-width, initial-scale=1",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
 };
 
 export default function RootLayout({

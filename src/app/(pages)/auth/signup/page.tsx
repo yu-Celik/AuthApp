@@ -1,4 +1,10 @@
 import { SignupForm } from "@/app/ui/auth/signup-form";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Signup",
+    description: "Signup page",
+};
 
 export default function SignupPage() {
     return (
