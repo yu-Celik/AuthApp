@@ -75,10 +75,7 @@ AuthApp intègre plusieurs niveaux de sécurité pour protéger les données des
 
 ### Sécurité de la base de données
 
-1. **ORM Prisma** :
-   - Utilisation de requêtes paramétrées pour prévenir les injections SQL.
-
-2. **Isolation des données** :
+1. **Isolation des données** :
    - Chaque utilisateur n'a accès qu'à ses propres données.
 
 ### Bonnes pratiques de développement
@@ -91,7 +88,6 @@ AuthApp intègre plusieurs niveaux de sécurité pour protéger les données des
 
 - Implémentation de l'authentification à deux facteurs (2FA).
 - Mise en place d'un système de détection des activités suspectes.
-- Chiffrement des données sensibles au repos dans la base de données.
 
 ## Prérequis
 
