@@ -25,7 +25,7 @@ function DashboardHeader({ user }: Props) {
                 <CardHeader>
                     <CardTitle className="text-2xl font-bold text-gray-800 dark:text-white">
                         Bienvenue :
-                        <span className="text-primary">{' '} {user.username}</span>
+                        <span className="text-primary">{' '} {user.username ? user.username.charAt(0).toUpperCase() + user.username.slice(1) : "Utilisateur"}</span>
                     </CardTitle>
                 </CardHeader>
             </Card>

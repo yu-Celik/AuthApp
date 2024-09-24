@@ -51,17 +51,17 @@ const SidebarLogo = ({ user }: { user: User }) => {
             className="relative z-20 flex items-center py-1 space-x-2 text-sm font-normal text-black"
         >
             {user.image ? (
-                <Image src={user.image} alt="Photo de profil" width={24} height={24} className="rounded-full flex-shrink-0 w-6 h-5" />
+                <Image src={user.image} alt="Photo de profil" width={24} height={24} className="rounded-full flex-shrink-0 w-6 h-6" />
             ) : (
-                <div className="flex-shrink-0 w-6 h-5 bg-black rounded-tl-lg rounded-tr-sm rounded-bl-sm rounded-br-lg dark:bg-white" />
+                <div className="flex-shrink-0 w-6 h-6 bg-black rounded-tl-lg rounded-tr-sm rounded-bl-sm rounded-br-lg dark:bg-white" />
             )}
 
             <motion.span
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="font-medium text-black whitespace-pre dark:text-white"
+                className="font-medium text-black whitespace-pre dark:text-white "
             >
-                {user.username}
+                { user.username ? user.username.charAt(0).toUpperCase() + user.username.slice(1) : "Utilisateur" }
             </motion.span>
         </Link>
     );
@@ -73,9 +73,9 @@ const SidebarLogoIcon = ({ user }: { user: User }) => {
             className="relative z-20 flex items-center py-1 space-x-2 text-sm font-normal text-black"
         >
             {user.image ? (
-                <Image src={user.image} alt="Photo de profil" width={24} height={24} className="rounded-full flex-shrink-0 w-6 h-5" />
+                <Image src={user.image} alt="Photo de profil" width={24} height={24} className="rounded-full flex-shrink-0 w-6 h-6" />
             ) : (
-                <div className="flex-shrink-0 w-6 h-5 bg-black rounded-tl-lg rounded-tr-sm rounded-bl-sm rounded-br-lg dark:bg-white" />
+                <div className="flex-shrink-0 w-6 h-6 bg-black rounded-tl-lg rounded-tr-sm rounded-bl-sm rounded-br-lg dark:bg-white" />
             )}
         </Link>
     );
