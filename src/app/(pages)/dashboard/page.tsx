@@ -37,7 +37,7 @@ const formatDate = (date: Date | null): string => {
 };
 
 
-const DashboardLayout = async ({ }: { children: React.ReactNode }) => {
+export default async function DashboardLayout() {
     const session = await auth();
     const DashboardBody = clx.main("flex flex-1 gap-2");
     
@@ -63,5 +63,3 @@ const DashboardLayout = async ({ }: { children: React.ReactNode }) => {
         </DashboardBody>
     );
 };
-
-export default DashboardLayout;
