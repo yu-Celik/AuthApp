@@ -25,7 +25,7 @@ export default {
                 });
 
                 if (!user || !user.emailVerified) {
-                    throw new CredentialsSignin({ cause: "Mail ou mot de passe incorrect" });
+                    throw new CredentialsSignin({ cause: "Identifiants invalides" });
                 }
 
                 const hasOAuthAccount = user.accounts.some(account =>
@@ -40,7 +40,7 @@ export default {
                 if (user.password) {
                     const isPasswordValid = await bcrypt.compare(credentials.password as string, user.password as string);
                     if (!isPasswordValid) {
-                        throw new CredentialsSignin({ cause: "Mail ou mot de passe incorrect" });
+                        throw new CredentialsSignin({ cause: "Identifiants invalides" });
                     }
                 } else {
                     throw new CredentialsSignin({ cause: "Méthode de connexion non valide pour ce compte" });

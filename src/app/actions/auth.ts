@@ -41,15 +41,13 @@ export async function signup(prevState: FormState | null, formData: FormData): P
     // Check if the user already exists
     const userExist = await getUserByEmail(email)
 
-    // If the user already exists and is not verified, delete the user
+    // If the user already exists and is not verified, send a verification email
     if (userExist && !userExist.emailVerified) {
-        console.log("User already exists and is not verified, deleting user")
-        await deleteUserByEmail(email)
+        const verificationToken = await generateVerificationToken(email);
+        await sendVerificationEmail(verificationToken.email as string, verificationToken.token);
+        return { success: 'Un email de vérification a été envoyé.' }
     } else if (userExist) {
-        console.log("User already exists, returning error")
-        return {
-            errors: { email: ['Un utilisateur existe déjà avec cette adresse email'] },
-        }
+        return { errors: { email: ['Cette adresse email est déjà utilisée.'] } }
     }
 
     // Hash the password
@@ -66,14 +64,10 @@ export async function signup(prevState: FormState | null, formData: FormData): P
         })
 
         const verificationToken = await generateVerificationToken(email);
-
         await sendVerificationEmail(verificationToken.email as string, verificationToken.token);
+        return { success: 'Un email de vérification a été envoyé.' }
 
-        return { success: 'Un email de vérification a été envoyé à votre adresse email.' }
     } catch (error) {
-
-
-
         return { errors: { _form: ['Une erreur est survenue lors de la création de l\'utilisateur'] } }
     }
 }
@@ -187,7 +181,7 @@ export async function resetPassword(prevState: FormState | null, formData: FormD
     const passwordResetToken = await generatePasswordResetToken(email)
     await sendPasswordResetEmail(passwordResetToken.email as string, passwordResetToken.token as string)
 
-    return { success: 'Un email de réinitialisation a été envoyé à votre adresse email.' }
+    return { success: 'Un email de réinitialisation a été envoyé' }
 }
 
 export async function newPassword(prevState: FormState | null, formData: FormData): Promise<FormState> {
