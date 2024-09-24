@@ -11,8 +11,8 @@ declare module "next-auth" {
             email?: string | null
             image?: string | null
             role?: UserRole
-            lastEmailSent?: Date | null
             createdAt?: Date | null
+            emailVerified?: Date | null
         }
     }
 
