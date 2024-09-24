@@ -1,4 +1,4 @@
-import { SigninForm } from "@/app/ui/signin-form";
+import { SigninForm } from "@/app/ui/auth/signin-form";
 
 export default async function SigninPage() {
     return (

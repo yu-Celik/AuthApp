@@ -1,4 +1,4 @@
-import { ResetPasswordForm } from "@/app/ui/reset-password-form"
+import { ResetPasswordForm } from "@/app/ui/auth/reset-password-form"
 
 function page() {
 

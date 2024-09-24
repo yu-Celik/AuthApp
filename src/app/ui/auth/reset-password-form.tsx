@@ -5,7 +5,7 @@ import { EmailStep } from "@/app/components/auth/email-step"
 import { useFormState } from "react-dom"
 import { useState } from "react"
 import { resetPassword } from "@/app/actions/auth"
-import BackLogin from "../components/auth/back-login"
+import BackLogin from "../../components/auth/back-login"
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
 

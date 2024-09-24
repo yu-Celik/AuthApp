@@ -1,5 +1,5 @@
 import { Metadata } from "next"
-import { NewVerificationForm } from "@/app/ui/verification-form"
+import { NewVerificationForm } from "@/app/ui/auth/verification-form"
 
 export const metadata: Metadata = {
     title: "Nouvelle vérification",

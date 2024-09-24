@@ -1,4 +1,4 @@
-import { NewPasswordForm } from "@/app/ui/new-password-form"
+import { NewPasswordForm } from "@/app/ui/auth/new-password-form"
 
 function page() {
 
