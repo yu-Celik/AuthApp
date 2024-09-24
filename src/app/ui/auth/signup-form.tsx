@@ -142,7 +142,7 @@ export function SignupForm() {
                         <FlexCol className="gap-2 my-4">
                             <SubmitButton text="S'inscrire" className='' />
                             <Or />
-                            <ResendButton email={email} text="S'inscrire avec un mail de connexion" />
+                            <ResendButton email={email} text="S'inscrire avec un mail de connexion" disabled />
                         </FlexCol>
                     </form>
                 ) : step === 3 && (

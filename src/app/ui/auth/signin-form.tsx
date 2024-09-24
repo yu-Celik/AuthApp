@@ -73,7 +73,7 @@ export function SigninForm() {
                         <FlexCol className="gap-2 my-4">
                             <SubmitButton text="Se connecter" className='' />
                             <Or />
-                            <ResendButton email={email} />
+                            <ResendButton email={email} disabled />
                         </FlexCol>
                     </form>
                 )}
