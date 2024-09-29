@@ -55,6 +55,7 @@ export function SigninForm() {
                     if (result.twoFactorToken) {
                         setStep(3)
                     } else if ('errors' in result) {
+                        console.log('je suis dans erreur');
                         setErrors(result.errors as FormErrors)
                     }
                 }

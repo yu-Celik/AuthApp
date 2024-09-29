@@ -49,6 +49,7 @@ export default {
                     console.log('je suis dans authorize 6');
                     const isPasswordValid = await bcrypt.compare(credentials.password as string, user.password as string);
                     if (!isPasswordValid) {
+                        console.log('je suis dans authorize 6.1');
                         throw new CredentialsSignin({ cause: "Identifiants invalides" });
                     }
                     console.log('je suis dans authorize 7');
@@ -60,16 +61,18 @@ export default {
                 if (user.isTwoFactorEnabled) {
                     console.log('je suis dans authorize 10');
                     if (credentials.twoFactorCode && credentials.twoFactorCode !== 'null' && typeof credentials.twoFactorCode === 'string') {
+                        console.log('je suis dans authorize 10.1');
                         const twoFactorCode = await verifyTwoFactorCode(user, credentials.twoFactorCode);
                         if (twoFactorCode) {
+                            console.log('je suis dans authorize 11');
                             throw new CredentialsSignin({ cause: twoFactorCode });
                         }
-                        console.log('je suis dans authorize 11');
+                        console.log('je suis dans authorize 11.1');
                     } else {
                         const twoFactorToken = await generateTwoFactorToken(user.email as string);
                         await sendTwoFactorEmail(twoFactorToken.email as string, twoFactorToken.token as string);
-                        throw new CredentialsSignin({ cause: "TWO_FACTOR_REQUIRED" });
                         console.log('je suis dans authorize 12');
+                        throw new CredentialsSignin({ cause: "TWO_FACTOR_REQUIRED" });
                     }
                 }
                 console.log('je suis dans authorize 13');

@@ -61,7 +61,7 @@ export function NewVerificationForm() {
                 {!success && error && <p className="text-sm text-red-500 text-center">{error}</p>}
 
                 {success && !error && (
-                    <p className="text-sm text-green-500">
+                    <p className="text-sm text-green-500 text-center">
                         {success} Vous allez être redirigé vers la page de connexion...
                     </p>
                 )}

@@ -4,7 +4,9 @@ import { generateTwoFactorToken } from '@/app/libs/services/generate-tokens'
 
 export async function sendTwoFactorEmail(email: string, token: string) {
     const resend = new Resend(process.env.AUTH_RESEND_KEY)
-
+    console.log('je suis dans sendTwoFactorEmail')
+    console.log(resend);
+    
     await resend.emails.send({
         from: 'authapp@resend.dev',
         to: email,
