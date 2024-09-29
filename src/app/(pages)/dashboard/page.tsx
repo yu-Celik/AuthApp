@@ -48,8 +48,8 @@ export default async function DashboardLayout() {
                     <ProfileField label="Nom d'utilisateur" value={session?.user?.username ? session?.user?.username.charAt(0).toUpperCase() + session?.user?.username.slice(1) : "Utilisateur"} />
                     <ProfileField label="Email" value={session?.user?.email} />
                     <ProfileField label="Rôle" value={getRoleLabel(session?.user?.role as UserRole)} />
-                    <ProfileField label="Email vérifié" value={formatDate(session?.user?.emailVerified as Date)} />
                     <ProfileField label="Date de création" value={formatDate(session?.user?.createdAt as Date)} />
+                    <ProfileField label="Email vérifié" value={formatDate(session?.user?.emailVerified as Date)} />
                     <ProfileField label="Authentification à deux facteurs" value={
                         <TwoFactorToggle
                             initialState={session?.user?.isTwoFactorEnabled || false}

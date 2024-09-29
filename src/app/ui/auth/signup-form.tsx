@@ -26,6 +26,15 @@ import Link from 'next/link'
 const EmailSchema = z.object({
     email: SignupFormSchema.shape.email,
 })
+const SignupSchema = z.object({
+    email: SignupFormSchema.shape.email,
+    username: SignupFormSchema.shape.username,
+    password: SignupFormSchema.shape.password,
+    confirmPassword: z.string()
+}).refine((data) => data.password === data.confirmPassword, {
+    message: "Les mots de passe ne correspondent pas",
+    path: ["confirmPassword"],
+})
 
 export function SignupForm() {
     const [step, setStep] = useState(1)
@@ -36,11 +45,12 @@ export function SignupForm() {
     const router = useRouter()
 
     const form = useForm({
-        resolver: zodResolver(step === 1 ? EmailSchema : SignupFormSchema),
+        resolver: zodResolver(step === 1 ? EmailSchema : SignupSchema),
         defaultValues: {
             email: "",
             username: "",
             password: "",
+            confirmPassword: "",
         },
         mode: step === 1 ? 'onSubmit' : 'onBlur',
         criteriaMode: 'all'
@@ -62,7 +72,7 @@ export function SignupForm() {
         };
     }, [canResend, timer]);
 
-    const onSubmit = (data: z.infer<typeof SignupFormSchema>) => {
+    const onSubmit = (data: z.infer<typeof SignupSchema>) => {
         setErrors(null)
         startTransition(async () => {
             try {
@@ -161,6 +171,16 @@ export function SignupForm() {
                                 control={form.control}
                                 name="password"
                                 label="Mot de passe"
+                                type="password"
+                                placeholder="********"
+                                aria-required="true"
+                                autoComplete="new-password"
+                                margin="md"
+                            />
+                            <FormInput
+                                control={form.control}
+                                name="confirmPassword"
+                                label="Confirmer le mot de passe"
                                 type="password"
                                 placeholder="********"
                                 aria-required="true"

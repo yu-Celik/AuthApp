@@ -27,7 +27,6 @@ export const SignupFormSchema = z.object({
     username: z
         .string()
         .min(2, { message: 'Le nom d\'utilisateur doit contenir au moins 2 caractères.' })
-        .max(30, { message: 'Le nom d\'utilisateur doit contenir au plus 30 caractères.' })
         .trim(),
     email: z.string().email({ message: 'Veuillez entrer une adresse email valide.' }).trim(),
     password: z

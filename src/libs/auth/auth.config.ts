@@ -37,7 +37,6 @@ export default {
                     account.provider === 'google' || account.provider === 'github'
                 );
                 if (hasOAuthAccount && !user.password) {
-                    
                     // L'utilisateur a un compte OAuth mais pas de mot de passe local
                     throw new CredentialsSignin({ cause: "Ce compte est associé à Google ou GitHub. Veuillez utiliser la connexion correspondante ou réinitialiser votre mot de passe." });
                 }
