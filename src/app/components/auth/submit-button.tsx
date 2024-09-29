@@ -24,8 +24,6 @@ export default function SubmitButton({
     const loading = pending || isLoading;
     const isDisabled = loading || disabled;
 
-    console.log(loading, pending, isLoading, disabled)
-
     return (
         <Button
             type={type}

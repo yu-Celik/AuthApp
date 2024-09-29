@@ -79,7 +79,6 @@ export function SigninForm() {
                     setErrors(result.errors as FormErrors)
                 } else if ('success' in result) {
                     // Redirection ou autre action après une connexion réussie
-                    console.log("Connexion avec 2FA réussie")
                 }
             } catch (error) {
                 console.error("Erreur lors de la vérification du code à deux facteurs:", error)

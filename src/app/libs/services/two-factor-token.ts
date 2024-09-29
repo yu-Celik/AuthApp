@@ -21,7 +21,6 @@ export const getTwoFactorTokenByEmail = async (email: string) => {
                 email: email,
             },
         });
-        console.log("getTwoFactorTokenByEmail", twoFactorToken)
         return twoFactorToken;
     } catch (error) {
         console.error("Erreur lors de la récupération du token de vérification à deux facteurs:", error);

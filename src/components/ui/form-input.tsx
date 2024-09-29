@@ -40,7 +40,6 @@ export const FormInput = <T extends FieldValues>({
         name === 'password' ? passwordCriteria.map(criterion => criterion.test(field.value)) : []
         , [name, field.value]);
 
-    console.log(field)
 
     return (
         <FormField
