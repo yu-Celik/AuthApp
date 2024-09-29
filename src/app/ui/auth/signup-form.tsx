@@ -77,23 +77,25 @@ export function SignupForm() {
                     formData.append('username', form.getValues('username'));
                     formData.append('password', form.getValues('password'));
                     const result = await signup(null, formData);
-                    if (result.errors) {
-                        // Gérer les erreurs spécifiques aux champs
-                        if (result.errors.email) {
-                            form.setError('email', { type: 'manual', message: result.errors.email[0] });
+                    if (result) {
+                        if (result.errors) {
+                            // Gérer les erreurs spécifiques aux champs
+                            if (result.errors.email) {
+                                form.setError('email', { type: 'manual', message: result.errors.email[0] });
+                            }
+                            if (result.errors.username) {
+                                form.setError('username', { type: 'manual', message: result.errors.username[0] });
+                            }
+                            if (result.errors.password) {
+                                form.setError('password', { type: 'manual', message: result.errors.password[0] });
+                            }
+                            // Gérer les erreurs générales du formulaire
+                            if (result.errors._form) {
+                                setErrors({ _form: result.errors._form });
+                            }
+                        } else if (result.success) {
+                            setStep(3);
                         }
-                        if (result.errors.username) {
-                            form.setError('username', { type: 'manual', message: result.errors.username[0] });
-                        }
-                        if (result.errors.password) {
-                            form.setError('password', { type: 'manual', message: result.errors.password[0] });
-                        }
-                        // Gérer les erreurs générales du formulaire
-                        if (result.errors._form) {
-                            setErrors({ _form: result.errors._form });
-                        }
-                    } else if (result.success) {
-                        setStep(3);
                     }
                 }
             } catch (error) {
@@ -108,15 +110,17 @@ export function SignupForm() {
             startTransition(async () => {
                 try {
                     const result = await resendVerificationEmail(form.getValues("email"))
-                    if (result.redirect) {
-                        setTimeout(() => {
-                            router.push('/auth/signin')
-                        }, 2000)
-                    } else if (result.success) {
-                        setCanResend(false)
-                        setTimer(60)
-                    } else {
-                        setErrors({ _form: [result.error || 'Une erreur est survenue lors du renvoi de l\'email'] })
+                    if (result) {
+                        if (result.redirect) {
+                            setTimeout(() => {
+                                router.push('/auth/signin')
+                            }, 2000)
+                        } else if (result.success) {
+                            setCanResend(false)
+                            setTimer(60)
+                        } else {
+                            setErrors({ _form: [result.error || 'Une erreur est survenue lors du renvoi de l\'email'] })
+                        }
                     }
                 } catch (error) {
                     console.error(error)

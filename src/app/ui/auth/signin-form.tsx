@@ -52,10 +52,12 @@ export function SigninForm() {
                     formData.append('email', form.getValues('email'));
                     formData.append('password', form.getValues('password'));
                     const result = await signin(null, formData);
-                    if (result.twoFactorToken) {
-                        setStep(3)
-                    } else if ('errors' in result) {
-                        setErrors(result.errors as FormErrors)
+                    if (result) {
+                        if (result.twoFactorToken) {
+                            setStep(3)
+                        } else if ('errors' in result) {
+                            setErrors(result.errors as FormErrors)
+                        }
                     }
                 }
             } catch (error) {

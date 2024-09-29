@@ -62,13 +62,15 @@ function TwoFactorForm({ onSubmit, errors, mail }: Props) {
             startTransitionResend(async () => {
                 try {
                     const result = await resendTwoFactorEmail(mail);
-                    if (result.success) {
-                        // Succès du renvoi
-                    } else {
-                        setError('twoFactorCode', {
-                            type: 'manual',
-                            message: result.error || "Erreur lors de l'envoi du code",
-                        });
+                    if (result) {
+                        if (result.success) {
+                            // Succès du renvoi
+                        } else {
+                            setError('twoFactorCode', {
+                                type: 'manual',
+                                message: result.error || "Erreur lors de l'envoi du code",
+                            });
+                        }
                     }
                 } catch (error) {
                     console.error("Erreur lors du renvoi du code:", error);

@@ -29,14 +29,16 @@ export function NewVerificationForm() {
 
             try {
                 const result = await verifyEmail(token)
-                if (result.errors) {
-                    setError(result.errors._form[0])
-                }
-                if (result.success) {
-                    setSuccess(result.success)
-                    setTimeout(() => {
-                        router.push("/auth/signin")
-                    }, 2000)
+                if (result) {
+                    if (result.errors) {
+                        setError(result.errors._form[0])
+                    }
+                    if (result.success) {
+                        setSuccess(result.success)
+                        setTimeout(() => {
+                            router.push("/auth/signin")
+                        }, 2000)
+                    }
                 }
             } catch (error) {
                 setError("Échec de la vérification")
