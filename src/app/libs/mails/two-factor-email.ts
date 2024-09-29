@@ -3,8 +3,9 @@ import { TwoFactorEmail } from '@/app/components/mails/two-factor-email'
 import { generateTwoFactorToken } from '@/app/libs/services/generate-tokens'
 
 export async function sendTwoFactorEmail(email: string, token: string) {
+    console.log('je suis dans sendTwoFactorEmail 1');
     const resend = new Resend(process.env.AUTH_RESEND_KEY)
-    console.log('je suis dans sendTwoFactorEmail')
+    console.log('je suis dans sendTwoFactorEmail 2');
     console.log(resend);
     
     await resend.emails.send({

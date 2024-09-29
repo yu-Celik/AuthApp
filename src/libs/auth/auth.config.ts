@@ -67,7 +67,9 @@ export default {
                         }
                         console.log('je suis dans authorize 11.1');
                     } else {
+                        console.log('je suis dans authorize 11.2');
                         const twoFactorToken = await generateTwoFactorToken(user.email as string);
+                        console.log('je suis dans authorize 11.3');
                         await sendTwoFactorEmail(twoFactorToken.email as string, twoFactorToken.token as string);
                         console.log('je suis dans authorize 12');
                         throw new CredentialsSignin({ cause: "TWO_FACTOR_REQUIRED" });
