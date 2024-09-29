@@ -60,6 +60,7 @@ export function SigninForm() {
                     }
                 }
             } catch (error) {
+                console.log('je suis dans catch 1');
                 console.error("Erreur lors de la connexion:", error)
                 setErrors({ _form: ["Une erreur est survenue lors de la connexion."] })
             }
@@ -82,6 +83,7 @@ export function SigninForm() {
                     // Redirection ou autre action après une connexion réussie
                 }
             } catch (error) {
+                console.log('je suis dans catch 2');
                 console.error("Erreur lors de la vérification du code à deux facteurs:", error)
                 setErrors({ _form: ["Une erreur est survenue lors de la vérification."] })
             }
