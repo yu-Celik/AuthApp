@@ -10,7 +10,7 @@ export async function sendPasswordResetEmail(email: string, token: string) {
         from: 'authapp@resend.dev',
         to: email,
         subject: 'Réinitialisation de votre mot de passe',
-        react: PasswordResetEmail({ resetLink }),
+        html: PasswordResetEmail({ resetLink }),
     })
 }
 

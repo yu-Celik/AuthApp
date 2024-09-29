@@ -10,7 +10,7 @@ export async function sendVerificationEmail(email: string, token: string) {
       from: 'authapp@resend.dev',
       to: email,
       subject: 'Vérification de votre adresse email',
-      react: VerificationEmail({ confirmLink }),
+      html: VerificationEmail({ confirmLink }),
     })
   }
   

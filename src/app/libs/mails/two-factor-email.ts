@@ -4,15 +4,17 @@ import { generateTwoFactorToken } from '@/app/libs/services/generate-tokens'
 
 export async function sendTwoFactorEmail(email: string, token: string) {
     console.log('je suis dans sendTwoFactorEmail 1');
+    console.error('AUTH_RESEND_KEY:', process.env.AUTH_RESEND_KEY);
+    console.log(process.env.NEXTAUTH_URL);
     const resend = new Resend(process.env.AUTH_RESEND_KEY)
     console.log('je suis dans sendTwoFactorEmail 2');
     console.log(resend);
-    
+
     await resend.emails.send({
         from: 'authapp@resend.dev',
         to: email,
         subject: 'Code de vérification pour l\'authentification à deux facteurs',
-        react: TwoFactorEmail({ token }),
+        html: TwoFactorEmail({ token }),
     })
 }
 
