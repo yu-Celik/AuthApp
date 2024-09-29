@@ -26,56 +26,42 @@ export default {
                     where: { email: credentials.email as string },
                     include: { accounts: true }
                 });
-                console.log('je suis dans authorize');
+                
                 
 
                 if (!user || !user.emailVerified) {
                     throw new CredentialsSignin({ cause: "Identifiants invalides" });
                 }
-                console.log('je suis dans authorize 2');
+                
                 const hasOAuthAccount = user.accounts.some(account =>
                     account.provider === 'google' || account.provider === 'github'
                 );
-                console.log('je suis dans authorize 3');
                 if (hasOAuthAccount && !user.password) {
-                    console.log('je suis dans authorize 4');
+                    
                     // L'utilisateur a un compte OAuth mais pas de mot de passe local
                     throw new CredentialsSignin({ cause: "Ce compte est associé à Google ou GitHub. Veuillez utiliser la connexion correspondante ou réinitialiser votre mot de passe." });
                 }
-                console.log('je suis dans authorize 5');
+                
                 if (user.password) {
-                    console.log('je suis dans authorize 6');
                     const isPasswordValid = await bcrypt.compare(credentials.password as string, user.password as string);
                     if (!isPasswordValid) {
-                        console.log('je suis dans authorize 6.1');
                         throw new CredentialsSignin({ cause: "Identifiants invalides" });
                     }
-                    console.log('je suis dans authorize 7');
                 } else {
-                    console.log('je suis dans authorize 8');
                     throw new CredentialsSignin({ cause: "Méthode de connexion non valide pour ce compte" });
                 }
-                console.log('je suis dans authorize 9');
                 if (user.isTwoFactorEnabled) {
-                    console.log('je suis dans authorize 10');
                     if (credentials.twoFactorCode && credentials.twoFactorCode !== 'null' && typeof credentials.twoFactorCode === 'string') {
-                        console.log('je suis dans authorize 10.1');
                         const twoFactorCode = await verifyTwoFactorCode(user, credentials.twoFactorCode);
                         if (twoFactorCode) {
-                            console.log('je suis dans authorize 11');
                             throw new CredentialsSignin({ cause: twoFactorCode });
                         }
-                        console.log('je suis dans authorize 11.1');
                     } else {
-                        console.log('je suis dans authorize 11.2');
                         const twoFactorToken = await generateTwoFactorToken(user.email as string);
-                        console.log('je suis dans authorize 11.3');
                         await sendTwoFactorEmail(twoFactorToken.email as string, twoFactorToken.token as string);
-                        console.log('je suis dans authorize 12');
                         throw new CredentialsSignin({ cause: "TWO_FACTOR_REQUIRED" });
                     }
                 }
-                console.log('je suis dans authorize 13');
                 return user;
             }
 

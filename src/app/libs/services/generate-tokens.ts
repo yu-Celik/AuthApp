@@ -60,13 +60,11 @@ export async function generatePasswordResetToken(email: string) {
 }
 
 export async function generateTwoFactorToken(email: string) {
-    console.log('je suis dans generateTwoFactorToken');
     const token = crypto.randomInt(100_000, 1_000_000).toString()
     // 10 minutes
     const expires = new Date(Date.now() + 1000 * 60 * 10)
 
     const existingToken = await getTwoFactorTokenByEmail(email)
-    console.log('je suis dans generateTwoFactorToken 2');
     if (existingToken) {
         await prisma.twoFactorToken.delete({
             where: {
@@ -74,7 +72,6 @@ export async function generateTwoFactorToken(email: string) {
             }
         })
     }
-    console.log('je suis dans generateTwoFactorToken 3');
     const twoFactorToken = await prisma.twoFactorToken.create({
         data: {
             email,
@@ -82,6 +79,5 @@ export async function generateTwoFactorToken(email: string) {
             expires
         }
     })
-    console.log('je suis dans generateTwoFactorToken 4');
     return twoFactorToken
 }

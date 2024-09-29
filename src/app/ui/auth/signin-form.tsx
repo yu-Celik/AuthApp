@@ -55,12 +55,10 @@ export function SigninForm() {
                     if (result.twoFactorToken) {
                         setStep(3)
                     } else if ('errors' in result) {
-                        console.log('je suis dans erreur');
                         setErrors(result.errors as FormErrors)
                     }
                 }
             } catch (error) {
-                console.log('je suis dans catch 1');
                 console.error("Erreur lors de la connexion:", error)
                 setErrors({ _form: ["Une erreur est survenue lors de la connexion."] })
             }
@@ -77,13 +75,14 @@ export function SigninForm() {
                 formData.append('twoFactorCode', data.twoFactorCode);
 
                 const result = await signin(null, formData);
-                if ('errors' in result) {
-                    setErrors(result.errors as FormErrors)
-                } else if ('success' in result) {
-                    // Redirection ou autre action après une connexion réussie
+                if (result) {
+                    if ('errors' in result) {
+                        setErrors(result.errors as FormErrors)
+                    } else if ('success' in result) {
+                        // Redirection ou autre action après une connexion réussie
+                    }
                 }
             } catch (error) {
-                console.log('je suis dans catch 2');
                 console.error("Erreur lors de la vérification du code à deux facteurs:", error)
                 setErrors({ _form: ["Une erreur est survenue lors de la vérification."] })
             }

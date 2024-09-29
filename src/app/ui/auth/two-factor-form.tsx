@@ -105,7 +105,6 @@ function TwoFactorForm({ onSubmit, errors, mail }: Props) {
                     autoComplete="one-time-code"
                     margin="md"
                 />
-                <FormMessage />
                 <SubmitButton
                     text="Vérifier"
                     loadingText="Vérification en cours..."
