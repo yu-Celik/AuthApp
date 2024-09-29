@@ -1,3 +1,4 @@
+"use server"
 import { Resend } from 'resend'
 import { TwoFactorEmail } from '@/app/components/mails/two-factor-email'
 import { generateTwoFactorToken } from '@/app/libs/services/generate-tokens'

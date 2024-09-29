@@ -1,3 +1,4 @@
+"use server"
 import { Resend } from 'resend'
 import { generatePasswordResetToken } from '@/app/libs/services/generate-tokens'
 import { PasswordResetEmail } from '@/app/components/mails/password-reset-email'

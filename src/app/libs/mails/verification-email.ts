@@ -1,3 +1,4 @@
+"use server"
 import { Resend } from 'resend'
 import { generateVerificationToken } from '@/app/libs/services/generate-tokens'
 import { isEmailVerified } from '@/app/libs/services/get-user'
