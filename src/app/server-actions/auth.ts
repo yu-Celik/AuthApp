@@ -73,25 +73,25 @@ export async function signup(prevState: FormState | null, formData: FormData): P
 // Login
 
 export async function signin(prevState: FormState | null, formData: FormData): Promise<FormState> {
-
+    console.log('je suis dans signin');
     // Validate form fields
     const validatedFields = SigninFormSchema.safeParse({
         email: formData.get('email'),
         password: formData.get('password'),
         twoFactorCode: formData.get('twoFactorCode'),
     })
-
+    console.log('je suis dans signin 2');
     // If any form fields are invalid, return early
     if (!validatedFields.success) {
         return {
             errors: validatedFields.error.flatten().fieldErrors,
         }
     }
-
+    console.log('je suis dans signin 3');
     // Extract the data from the validated fields
     const { email, password, twoFactorCode } = validatedFields.data
 
-
+    console.log('je suis dans signin 4');
     try {
         await nextAuthSignIn("credentials", {
             email,
@@ -99,10 +99,11 @@ export async function signin(prevState: FormState | null, formData: FormData): P
             twoFactorCode,
             redirectTo: DEFAULT_LOGIN_REDIRECT,
         })
-
+        console.log('je suis dans signin 5');
         return { success: true }
 
     } catch (error) {
+        console.log('je suis dans signin 6');
         if (error instanceof AuthError) {
             switch (error.type) {
                 case 'CredentialsSignin':
@@ -112,6 +113,7 @@ export async function signin(prevState: FormState | null, formData: FormData): P
                     }
                     return { errors: { _form: [error.cause as unknown as string] } }
                 default:
+                    console.log('je suis dans catch 3');
                     return { errors: { _form: ['Une erreur système est survenue. Veuillez réessayer plus tard.'] } }
             }
         }
