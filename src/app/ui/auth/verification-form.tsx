@@ -3,7 +3,7 @@
 import { useSearchParams, useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { Bounce } from "@/components/ui/loaders"
-import { verifyEmail } from "@/app/actions/auth"
+import { verifyEmail } from "@/app/server-actions/auth"
 import { Card } from "@/components/ui/card"
 import { FlexCol } from "@/components/ui/containers"
 import BackLogin from "@/app/components/auth/back-login"

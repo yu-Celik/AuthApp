@@ -6,7 +6,12 @@ import GoogleProvider from "next-auth/providers/google"
 // import Nodemailer from "next-auth/providers/nodemailer"
 import bcrypt from "bcryptjs"
 // import Resend from "next-auth/providers/resend"
-import prisma from "@/libs/prisma"
+import prisma from "@/libs/prisma/prisma"
+import { getTwoFactorConfirmationByUserId } from "@/app/libs/services/two-factor-confirmation"
+import { getTwoFactorTokenByEmail } from "@/app/libs/services/two-factor-token"
+import { generateTwoFactorToken } from "@/app/libs/services/generate-tokens"
+import { sendTwoFactorEmail } from "@/app/libs/mails/two-factor-email"
+import { verifyTwoFactorCode } from "@/app/libs/services/verify-two-factor-code"
 
 export default {
     providers: [
@@ -14,13 +19,13 @@ export default {
             name: 'Credentials',
             credentials: {
                 email: { label: "Email", type: "email" },
-                password: { label: "Mot de passe", type: "password" }
+                password: { label: "Mot de passe", type: "password" },
+                twoFactorCode: { label: "Code de vérification", type: "text" }
             },
             // @ts-expect-error because of the way next-auth is typed
             async authorize(credentials) {
                 const user = await prisma.user.findUnique({
                     where: { email: credentials.email as string },
-
                     include: { accounts: true }
                 });
 
@@ -46,8 +51,22 @@ export default {
                     throw new CredentialsSignin({ cause: "Méthode de connexion non valide pour ce compte" });
                 }
 
+                if (user.isTwoFactorEnabled) {
+                    if (credentials.twoFactorCode && credentials.twoFactorCode !== 'null' && typeof credentials.twoFactorCode === 'string') {
+                        const twoFactorCode = await verifyTwoFactorCode(user, credentials.twoFactorCode);
+                        if (twoFactorCode) {
+                            throw new CredentialsSignin({ cause: twoFactorCode });
+                        }
+                    } else {
+                        const twoFactorToken = await generateTwoFactorToken(user.email as string);
+                        await sendTwoFactorEmail(twoFactorToken.email as string, twoFactorToken.token as string);
+                        throw new CredentialsSignin({ cause: "TWO_FACTOR_REQUIRED" });
+                    }
+                }
+
                 return user;
             }
+
         }),
         GithubProvider,
         GoogleProvider,

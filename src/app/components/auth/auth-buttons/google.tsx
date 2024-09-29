@@ -2,7 +2,7 @@
 
 import { signIn } from "next-auth/react"
 import { Button } from "@/components/ui/button"
-import { DEFAULT_LOGIN_REDIRECT } from "@/routes"
+import { DEFAULT_LOGIN_REDIRECT } from "@/config/routes"
 
 export default function GoogleButton(props: React.ComponentPropsWithRef<typeof Button> & { text?: string }) {
     const text = props.text || "Se connecter avec Google"

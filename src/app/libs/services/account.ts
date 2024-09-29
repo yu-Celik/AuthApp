@@ -1,4 +1,4 @@
-import prisma from "@/libs/prisma";
+import prisma from "@/libs/prisma/prisma";
 import { Account } from "@prisma/client";
 
 export async function getAccountByProvider(provider: string, providerAccountId: string): Promise<Account | null> {
@@ -29,5 +29,18 @@ export async function createAccount(data: Partial<Account>): Promise<Account | n
     } catch (error) {
         console.error(error);
         return null;
+    }
+}
+
+export async function updateAccount(id: string, data: Partial<Account>): Promise<Account | null> {
+    try {
+        const updatedAccount = await prisma.account.update({
+            where: { id },
+            data: data as Account
+        });
+        return updatedAccount
+    } catch (error) {
+        console.error(error)
+        return null
     }
 }

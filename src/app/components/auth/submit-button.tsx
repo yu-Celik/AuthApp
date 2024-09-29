@@ -1,15 +1,44 @@
-import { Button } from "@/components/ui/button";
+import { Button, ButtonProps } from "@/components/ui/button";
 import { cn } from "@/libs/utils/clx/core/classNames";
 import { Loader2 } from "lucide-react";
-import { FormEvent } from "react";
-import { useFormStatus } from "react-dom";
 import { ReactNode } from "react";
-export default function SubmitButton({ text, onClick, className, disabled }: { text: string | ReactNode, onClick?: (e: FormEvent) => void, className: string, disabled?: boolean }) {
-    const { pending } = useFormStatus()
+import { useFormStatus } from "react-dom";
+
+interface SubmitButtonProps extends Omit<ButtonProps, 'type'> {
+    text: string | ReactNode;
+    loadingText?: string;
+    isLoading?: boolean;
+    type?: "submit" | "button";
+}
+
+export default function SubmitButton({
+    text,
+    loadingText = "En cours...",
+    type = "submit",
+    className,
+    disabled,
+    isLoading,
+    ...props
+}: SubmitButtonProps) {
+    const { pending } = useFormStatus();
+    const loading = pending || isLoading;
+    const isDisabled = loading || disabled;
+
+    console.log(loading, pending, isLoading, disabled)
 
     return (
-        <Button onClick={onClick} disabled={pending || disabled} type="submit" className={cn('w-full flex items-center justify-center', className)}>
-            {pending ? <>En cours... <Loader2 className="w-4 h-4 animate-spin ml-2" /></> : text}
+        <Button
+            type={type}
+            disabled={isDisabled}
+            className={cn('w-full flex items-center justify-center text-wrap', className ?? '')}
+            aria-busy={loading}
+            {...props}
+        >
+            {loading ? (
+                <>
+                    {loadingText} <Loader2 className="w-4 h-4 animate-spin ml-2" aria-hidden="true" />
+                </>
+            ) : text}
         </Button>
-    )
+    );
 }

@@ -13,6 +13,7 @@ declare module "next-auth" {
             role?: UserRole
             createdAt?: Date | null
             emailVerified?: Date | null
+            isTwoFactorEnabled?: boolean
         }
     }
 
@@ -22,6 +23,7 @@ declare module "next-auth" {
         id?: string
         role?: UserRole
         username?: string
+        isTwoFactorEnabled?: boolean
     }
 
     interface User extends DefaultUser {
@@ -29,5 +31,6 @@ declare module "next-auth" {
         username?: string
         emailVerified?: boolean
         createdAt?: Date | null
+        isTwoFactorEnabled?: boolean
     }
 }

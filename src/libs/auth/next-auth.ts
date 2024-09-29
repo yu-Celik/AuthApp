@@ -1,7 +1,7 @@
 import NextAuth from "next-auth"
 import { PrismaAdapter } from "@auth/prisma-adapter"
-import prisma from "@/libs/prisma"
-import authConfig from "@/libs/auth.config"
+import prisma from "@/libs/prisma/prisma"
+import authConfig from "@/libs/auth/auth.config"
 import { UserRole } from "@prisma/client"
 import { getAccountByProvider, createAccount } from "@/app/libs/services/account"
 
@@ -35,6 +35,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 token.role = user.role
                 token.username = user.username
                 token.createdAt = user.createdAt
+                token.isTwoFactorEnabled = user.isTwoFactorEnabled
             }
             if (account) {
                 token.accessToken = account.access_token
@@ -51,6 +52,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 session.user.username = token.username as string;
                 session.user.emailVerified = token.emailVerified as Date;
                 session.user.createdAt = token.createdAt as Date;
+                session.user.isTwoFactorEnabled = token.isTwoFactorEnabled as boolean;
             }
             return session
         },

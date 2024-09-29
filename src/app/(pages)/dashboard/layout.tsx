@@ -1,6 +1,6 @@
 import { clx } from "@/libs/utils/clx/clx-merge";
 import { User } from "@prisma/client";
-import { auth } from "@/libs/next-auth";
+import { auth } from "@/libs/auth/next-auth";
 import DashboardHeader from "@/app/components/dashboard/header";
 import DashboardSidebar from "@/app/components/dashboard/sidebar";
 import type { Metadata } from "next";

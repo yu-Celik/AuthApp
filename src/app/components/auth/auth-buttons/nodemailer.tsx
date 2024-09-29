@@ -1,7 +1,7 @@
 "use client"
 import { signIn } from "next-auth/react"
 import { Button } from "@/components/ui/button"
-import { DEFAULT_LOGIN_REDIRECT } from "@/routes"
+import { DEFAULT_LOGIN_REDIRECT } from "@/config/routes"
 
 export default function NodemailerButton(props: React.ComponentPropsWithRef<typeof Button> & { text?: string, email: string }) {
     const text = props.text || "Envoyer un mail de connexion"

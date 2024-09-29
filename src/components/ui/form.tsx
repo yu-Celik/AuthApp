@@ -8,6 +8,8 @@ import {
   type FieldValues,
 } from "react-hook-form";
 
+import { CheckCircle2, CircleAlert } from "lucide-react";
+
 // utils
 import { cn } from "@/libs/utils/core/cn";
 // primitives
@@ -107,7 +109,7 @@ FormLabel.displayName = "FormLabel";
 
 const FormControl = React.forwardRef<
   React.ElementRef<typeof Slot>,
-  React.ComponentPropsWithoutRef<typeof Slot>
+  React.ComponentPropsWithoutRef<typeof Slot> & { error?: boolean }
 >(({ ...props }, ref) => {
   const { error, formItemId, formDescriptionId, formMessageId } = useFormField();
 
@@ -119,6 +121,7 @@ const FormControl = React.forwardRef<
         !error ? `${formDescriptionId}` : `${formDescriptionId} ${formMessageId}`
       }
       aria-invalid={!!error}
+      error={!!error}
       {...props}
     />
   );
@@ -142,10 +145,11 @@ const FormDescription = React.forwardRef<
 });
 FormDescription.displayName = "FormDescription";
 
+
 const FormMessage = React.forwardRef<
   HTMLParagraphElement,
-  React.HTMLAttributes<HTMLParagraphElement>
->(({ className, children, ...props }, ref) => {
+  React.HTMLAttributes<HTMLParagraphElement> & { variant?: 'default' | 'error' | 'success' }
+>(({ className, children, variant = 'default', ...props }, ref) => {
   const { error, formMessageId } = useFormField();
   const body = error ? String(error?.message) : children;
 
@@ -153,15 +157,30 @@ const FormMessage = React.forwardRef<
     return null;
   }
 
+  const variantStyles = {
+    default: "text-sm font-medium text-destructive",
+    error: "flex items-center gap-2 text-sm font-medium text-destructive/60 rounded-md p-3 bg-destructive/10",
+    success: "flex items-center gap-2 text-sm font-medium text-green-600 rounded-md p-3 bg-green-50"
+
+  };
+
   return (
-    <p
+    <div
       ref={ref}
       id={formMessageId}
-      className={cn("text-sm font-medium text-destructive", className)}
+      className={cn(variantStyles[variant], className)}
       {...props}
     >
-      {body}
-    </p>
+      {variant === 'error' && (
+        <CircleAlert className="w-5 h-5" />
+      )}
+      {variant === 'success' && (
+        <CheckCircle2 className="w-5 h-5" />
+      )}
+      <span>
+        {body}
+      </span>
+    </div>
   );
 });
 FormMessage.displayName = "FormMessage";

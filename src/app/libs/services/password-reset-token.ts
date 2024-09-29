@@ -1,4 +1,4 @@
-import prisma from "@/libs/prisma"
+import prisma from "@/libs/prisma/prisma"
 
 
 export const getPasswordResetTokenByToken = async (token: string) => {

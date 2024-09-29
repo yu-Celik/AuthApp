@@ -4,10 +4,10 @@ import React, { useState } from "react";
 import { useFormStatus } from "react-dom";
 import { Eye, EyeOff } from "lucide-react";
 
-export type InputProps = React.InputHTMLAttributes<HTMLInputElement>;
+export type InputProps = React.InputHTMLAttributes<HTMLInputElement> & { error?: string };
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, type, autoComplete, ...props }, ref) => {
+  ({ className, type, autoComplete, error, ...props }, ref) => {
     const { pending } = useFormStatus();
     const [isFocused, setIsFocused] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
@@ -33,6 +33,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             "flex h-10 w-full",
             "rounded-md bg-background px-3 py-2 text-sm",
             isFocused && "input-placeholder-hidden",
+            error && "border-destructive",
             className,
           )}
           ref={ref}
@@ -44,10 +45,10 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           <button
             type="button"
             onClick={togglePasswordVisibility}
-            className="absolute right-4"
+            className="absolute right-2 bg-muted/60 p-1 rounded-md"
             aria-label={showPassword ? "Masquer le mot de passe" : "Afficher le mot de passe"}
           >
-            {showPassword ? <Eye className="w-5 h-5" /> : <EyeOff className="w-5 h-5" />}
+            {showPassword ? <Eye className="w-6 h-4 text-muted-foreground" /> : <EyeOff className="w-6 h-4" />}
           </button>
         )}
       </div>

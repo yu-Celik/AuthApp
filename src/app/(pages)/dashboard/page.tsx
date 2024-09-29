@@ -2,12 +2,12 @@ import { clx } from "@/libs/utils/clx/clx-merge";
 import { UserRole } from "@prisma/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import ProfileField from "@/app/components/dashboard/profile-field";
-import { auth } from "@/libs/next-auth";
+import { auth } from "@/libs/auth/next-auth";
 import type { Metadata } from "next";
 import { format } from 'date-fns';
-import { fr } from 'date-fns/locale';
+import { fr } from 'date-fns/locale/fr';
 import { toZonedTime } from 'date-fns-tz';
-
+import { TwoFactorToggle } from "@/app/components/dashboard/two-factor-toggle";
 export const metadata: Metadata = {
     title: "Dashboard",
     description: "Dashboard page",
@@ -35,10 +35,10 @@ const formatDate = (date: Date | null): string => {
 export default async function DashboardLayout() {
     const session = await auth();
     const DashboardBody = clx.main("flex flex-1 gap-2");
-    
+
     return (
         <DashboardBody>
-            <Card className="bg-white dark:bg-gray-800 shadow-md rounded-lg p-6 w-full lg:max-w-[50%]">
+            <Card className="bg-white dark:bg-gray-800 shadow-md rounded-lg p-6 w-full md:max-w-[50%]">
                 <CardHeader>
                     <CardTitle className="text-2xl font-bold mb-4 text-gray-800 dark:text-white">
                         Profil Utilisateur
@@ -50,6 +50,14 @@ export default async function DashboardLayout() {
                     <ProfileField label="Rôle" value={getRoleLabel(session?.user?.role as UserRole)} />
                     <ProfileField label="Email vérifié" value={formatDate(session?.user?.emailVerified as Date)} />
                     <ProfileField label="Date de création" value={formatDate(session?.user?.createdAt as Date)} />
+                    <ProfileField label="Authentification à deux facteurs" value={
+                        <TwoFactorToggle
+                            initialState={session?.user?.isTwoFactorEnabled || false}
+                            userId={session?.user?.id || ''}
+                        />
+                    } />
+
+
                 </CardContent >
             </Card>
         </DashboardBody>

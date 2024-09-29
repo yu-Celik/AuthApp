@@ -1,6 +1,7 @@
 export type FormState = {
     errors?: FormErrors
     success?: boolean | string
+    twoFactorToken?: boolean
     user?: {
         id: string;
         username: string | null;
@@ -18,6 +19,7 @@ export type User = {
     emailVerified: Date | null;
     image: string | null;
     role: UserRole
+    isTwoFactorEnabled: boolean;
 };
 
 export type UserRole = "ADMIN" | "USER"
@@ -28,4 +30,5 @@ export type FormErrors = {
     email?: string[];
     password?: string[];
     _form?: string[];
+    twoFactorCode?: string[];
 }

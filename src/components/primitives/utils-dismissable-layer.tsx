@@ -79,7 +79,6 @@ const DismissableLayer = React.forwardRef<DismissableLayerElement, DismissableLa
     const composedRefs = useComposedRefs(forwardedRef, (node) => setNode(node));
     const layers = Array.from(context.layers);
     const [highestLayerWithOutsidePointerEventsDisabled] = [
-      // @ts-expect-error: Ignore this
       ...context.layersWithOutsidePointerEventsDisabled,
     ].slice(-1); // prettier-ignore
     const highestLayerWithOutsidePointerEventsDisabledIndex = layers.indexOf(
@@ -93,7 +92,6 @@ const DismissableLayer = React.forwardRef<DismissableLayerElement, DismissableLa
 
     const pointerDownOutside = usePointerDownOutside((event) => {
       const target = event.target as HTMLElement;
-      // @ts-expect-error= Type 'Set<HTMLDivElement>' can only be iterated through when using the '--downlevelIteration' flag or with a '--target' of 'es2015' or higher.ts(2802)
       const isPointerDownOnBranch = [...context.branches].some((branch) =>
         branch.contains(target),
       );
@@ -109,7 +107,6 @@ const DismissableLayer = React.forwardRef<DismissableLayerElement, DismissableLa
 
     const focusOutside = useFocusOutside((event) => {
       const target = event.target as HTMLElement;
-      // @ts-expect-error= Type 'Set<HTMLDivElement>' can only be iterated through when using the '--downlevelIteration' flag or with a '--target' of 'es2015' or higher.ts(2802)
       const isFocusInBranch = [...context.branches].some((branch) =>
         branch.contains(target),
       );
@@ -267,7 +264,6 @@ function usePointerDownOutside(
       if (event.target && !isPointerInsideReactTreeRef.current) {
         const eventDetail = { originalEvent: event };
 
-        // @ts-expect-error: Move function declaration to function body root
         // eslint-disable-next-line no-inner-declarations
         function handleAndDispatchPointerDownOutsideEvent() {
           handleAndDispatchCustomEvent(

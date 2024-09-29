@@ -99,12 +99,18 @@ export function MobileSidebar({ className, children, ...props }: TMobileSidebar)
     <>
       <div
         className={cn(
-          "h-10 p-4 flex flex-row md:hidden  items-center justify-between bg-card/80 w-full",
+          "h-10 p-8 flex flex-row md:hidden  items-center justify-between bg-card/80 w-full",
         )}
         {...props}
       >
-        <div className="z-20 flex justify-end w-full">
-          <MenuIcon className="text-primary" onClick={() => setOpen(!open)} />
+        <div 
+          className="z-20 flex justify-end absolute right-6 top-5"
+          onClick={() => setOpen(!open)}
+          onKeyUp={(e) => e.key === "Enter" && setOpen(!open)} // Added keyboard event
+          role="button" // Added role for accessibility
+          tabIndex={0} // Added tabIndex for focusability
+        >
+          <MenuIcon />
         </div>
         <AnimatePresence>
           {open && (
@@ -122,7 +128,7 @@ export function MobileSidebar({ className, children, ...props }: TMobileSidebar)
               )}
             >
               <div
-                className="absolute z-50 right-10 top-10 text-primary"
+                className="absolute z-50 right-6 top-5"
                 onClick={() => setOpen(!open)}
                 onKeyUp={(e) => e.key === "Enter" && setOpen(!open)} // Added keyboard event
                 role="button" // Added role for accessibility

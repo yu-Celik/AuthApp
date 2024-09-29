@@ -1,32 +1,29 @@
 'use server'
 import { SignupFormSchema } from '@/app/libs/definitions/signup'
-import { FormState } from '@/types/definitions/type'
+import { FormState } from '@/app/types/definitions/type'
 import bcrypt from 'bcryptjs'
 import { SigninFormSchema } from '../libs/definitions/signin'
-import { deleteUserByEmail, getUserByEmail } from '@/app/libs/services/get-user'
-import prisma from '@/libs/prisma'
-import { signIn as nextAuthSignIn } from '@/libs/next-auth'
-import { DEFAULT_LOGIN_REDIRECT } from '@/routes'
+import { getUserByEmail } from '@/app/libs/services/get-user'
+import prisma from '@/libs/prisma/prisma'
+import { signIn as nextAuthSignIn } from '@/libs/auth/next-auth'
+import { DEFAULT_LOGIN_REDIRECT } from '@/config/routes'
 import { AuthError } from 'next-auth'
 import { generatePasswordResetToken, generateVerificationToken } from '@/app/libs/services/generate-tokens'
-import { sendVerificationEmail, sendPasswordResetEmail } from '@/app/libs/mail'
+import { sendVerificationEmail } from '@/app/libs/mails/verification-email'
+import { sendPasswordResetEmail } from '@/app/libs/mails/password-reset-email'
 import { getVerificationTokenByToken } from '@/app/libs/services/get-verification-token'
 import { NewPasswordFormSchema, ResetPasswordFormSchema } from '@/app/libs/definitions/reset-password'
 import { getPasswordResetTokenByToken } from '@/app/libs/services/password-reset-token'
 
 // Signup
 export async function signup(prevState: FormState | null, formData: FormData): Promise<FormState> {
-
-
-
+    
     // Validate form fields
     const validatedFields = SignupFormSchema.safeParse({
         username: formData.get('username'),
         email: formData.get('email'),
         password: formData.get('password'),
     })
-
-
 
     // If any form fields are invalid, return early
     if (!validatedFields.success) {
@@ -81,6 +78,7 @@ export async function signin(prevState: FormState | null, formData: FormData): P
     const validatedFields = SigninFormSchema.safeParse({
         email: formData.get('email'),
         password: formData.get('password'),
+        twoFactorCode: formData.get('twoFactorCode'),
     })
 
     // If any form fields are invalid, return early
@@ -91,12 +89,14 @@ export async function signin(prevState: FormState | null, formData: FormData): P
     }
 
     // Extract the data from the validated fields
-    const { email, password } = validatedFields.data
+    const { email, password, twoFactorCode } = validatedFields.data
+
 
     try {
         await nextAuthSignIn("credentials", {
             email,
             password,
+            twoFactorCode,
             redirectTo: DEFAULT_LOGIN_REDIRECT,
         })
 
@@ -106,6 +106,10 @@ export async function signin(prevState: FormState | null, formData: FormData): P
         if (error instanceof AuthError) {
             switch (error.type) {
                 case 'CredentialsSignin':
+                    // @ts-expect-error auth.config.ts
+                    if (error.cause === "TWO_FACTOR_REQUIRED") {
+                        return { twoFactorToken: true }
+                    }
                     return { errors: { _form: [error.cause as unknown as string] } }
                 default:
                     return { errors: { _form: ['Une erreur système est survenue. Veuillez réessayer plus tard.'] } }
