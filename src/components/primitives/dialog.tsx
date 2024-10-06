@@ -220,6 +220,7 @@ const DialogOverlayImpl = React.forwardRef<
   );
 });
 
+DialogOverlayImpl.displayName = OVERLAY_NAME;
 /* -------------------------------------------------------------------------------------------------
  * DialogContent
  * -----------------------------------------------------------------------------------------------*/
@@ -305,6 +306,8 @@ const DialogContentModal = React.forwardRef<
   );
 });
 
+DialogContentModal.displayName = CONTENT_NAME;
+
 /* -----------------------------------------------------------------------------------------------*/
 
 const DialogContentNonModal = React.forwardRef<
@@ -365,6 +368,7 @@ const DialogContentNonModal = React.forwardRef<
   );
 });
 
+DialogContentNonModal.displayName = CONTENT_NAME;
 /* -----------------------------------------------------------------------------------------------*/
 
 type DialogContentImplElement = React.ElementRef<typeof DismissableLayer>;
@@ -438,6 +442,7 @@ const DialogContentImpl = React.forwardRef<
   );
 });
 
+DialogContentImpl.displayName = CONTENT_NAME;
 /* -------------------------------------------------------------------------------------------------
  * DialogTitle
  * -----------------------------------------------------------------------------------------------*/
