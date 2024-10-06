@@ -16,19 +16,19 @@ export async function verifyEmail(token: string) {
         return { errors: { _form: ['Votre email de vérification a expiré'] } }
     }
 
-    const user = await getUserByEmail(verificationToken.email as string)
-    if (!user) {
+    const userId = await getUserByEmail(verificationToken.email as string)
+    if (!userId) {
         return { errors: { _form: ['Aucun compte trouvé avec cette adresse email'] } }
     }
 
     try {
         await prisma.user.update({
             where: {
-                id: user.id
+                id: userId
             },
             data: {
                 emailVerified: new Date(),
-                email: user.email
+                email: verificationToken.email
             }
         })
 

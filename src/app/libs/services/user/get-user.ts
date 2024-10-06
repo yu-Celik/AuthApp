@@ -3,17 +3,16 @@
 import prisma from "@/libs/prisma/prisma";
 import { User } from "@prisma/client";
 
-export async function getUserByEmail(email: string): Promise<boolean> {
+export async function getUserByEmail(email: string): Promise<string | null> {
     try {
         const user = await prisma.user.findUnique({
             where: { email },
-            select: { id: true }
         });
 
-        return !!user;
+        return user ? user.id : null
     } catch (error) {
-        console.error("Erreur lors de la vérification de l'existence de l'utilisateur:", error);
-        return false; // En cas d'erreur, on considère que l'utilisateur n'existe pas
+        console.error("Erreur lors de la récupération de l'utilisateur:", error);
+        return null;
     }
 }
 

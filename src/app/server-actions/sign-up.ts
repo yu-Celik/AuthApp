@@ -3,7 +3,7 @@
 import { SignupFormSchema } from '@/app/libs/schemas/signup'
 import { FormState } from '@/app/libs/definitions/form-types'
 import bcrypt from 'bcryptjs'
-import { getUserByEmail } from '@/app/libs/services/user/get-user'
+import { getUserByEmail, isEmailVerified as isEmailVerifiedService } from '@/app/libs/services/user/get-user'
 import prisma from '@/libs/prisma/prisma'
 import { generateVerificationToken } from '@/app/libs/services/token/generate-tokens'
 import { sendVerificationEmail } from '@/app/libs/emails/verification-email'
@@ -30,8 +30,10 @@ export async function signup(prevState: FormState | null, formData: FormData): P
     // Check if the user already exists
     const userExist = await getUserByEmail(email)
 
+    const isEmailVerified = await isEmailVerifiedService(email as string)
+
     // If the user already exists and is not verified, send a verification email
-    if (userExist && !userExist.emailVerified) {
+    if (userExist && !isEmailVerified) {
         const verificationToken = await generateVerificationToken(email);
         await sendVerificationEmail(verificationToken.email as string, verificationToken.token);
         return { success: 'Un email de vérification a été envoyé.' }

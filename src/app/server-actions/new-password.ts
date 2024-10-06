@@ -31,8 +31,8 @@ export async function newPassword(prevState: FormState | null, formData: FormDat
         return { errors: { _form: ['Votre lien de réinitialisation a expiré'] } }
     }
 
-    const user = await getUserByEmail(passwordResetToken.email)
-    if (!user) {
+    const userId = await getUserByEmail(passwordResetToken.email)
+    if (!userId) {
         return { errors: { _form: ['Aucun compte trouvé avec cette adresse email'] } }
     }
 
@@ -40,7 +40,7 @@ export async function newPassword(prevState: FormState | null, formData: FormDat
 
     try {
         await prisma.user.update({
-            where: { id: user.id },
+            where: { id: userId },
             data: { password: hashedPassword }
         })
 
