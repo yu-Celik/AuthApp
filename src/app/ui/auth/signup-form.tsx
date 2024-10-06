@@ -12,15 +12,14 @@ import { useState, useEffect, useTransition } from 'react'
 import SubmitButton from "@/app/components/auth/submit-button"
 import { FlexCol } from "@/components/ui/containers"
 import { z } from "zod"
-import { FormErrors } from "@/app/types/definitions/type"
+import { FormErrors } from "@/app/libs/definitions/form-types"
 import GithubSignInButton from '@/app/components/auth/auth-buttons/github'
 import GoogleSignInButton from '@/app/components/auth/auth-buttons/google'
-import { signup } from "@/app/server-actions/auth"
-import { SignupFormSchema } from "@/app/libs/definitions/signup"
-import { Button } from "@/components/ui/button"
-import { Loader2, Mail, RefreshCw } from 'lucide-react'
+import { signup } from "@/app/server-actions/sign-up"
+import { SignupFormSchema } from "@/app/libs/schemas/signup"
+import { Mail, RefreshCw } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import { resendVerificationEmail } from '@/app/libs/mails/verification-email'
+import { resendVerificationEmail } from '@/app/libs/emails/verification-email'
 import Link from 'next/link'
 
 const EmailSchema = z.object({

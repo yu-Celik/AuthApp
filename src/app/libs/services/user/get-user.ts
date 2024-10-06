@@ -1,33 +1,33 @@
+'use server'
+
 import prisma from "@/libs/prisma/prisma";
 import { User } from "@prisma/client";
 
-export async function getUserByEmail(email: string): Promise<User | null> {
+export async function getUserByEmail(email: string): Promise<boolean> {
     try {
         const user = await prisma.user.findUnique({
-            where: {
-                email: email
-            }
-        })
+            where: { email },
+            select: { id: true }
+        });
 
-        return user
+        return !!user;
     } catch (error) {
-        console.error(error)
-        return null
+        console.error("Erreur lors de la vérification de l'existence de l'utilisateur:", error);
+        return false; // En cas d'erreur, on considère que l'utilisateur n'existe pas
     }
 }
 
-export async function getUserById(id: string): Promise<User | null> {
+export async function getUserById(id: string): Promise<boolean> {
     try {
         const user = await prisma.user.findUnique({
-            where: {
-                id: id
-            }
+            where: { id },
+            select: { id: true }
         })
 
-        return user
+        return !!user
     } catch (error) {
         console.error(error)
-        return null
+        return false
     }
 }
 
@@ -52,9 +52,8 @@ export async function isEmailVerified(email: string): Promise<boolean> {
 export async function deleteUserByEmail(email: string): Promise<User | null> {
     try {
         const user = await prisma.user.delete({
-            where: {
-                email: email
-            }
+            where: { email }
+            
         })
 
         return user
@@ -62,6 +61,6 @@ export async function deleteUserByEmail(email: string): Promise<User | null> {
         console.error(error)
         return null
     }
-}   
+}
 
 

@@ -3,7 +3,7 @@ import { PrismaAdapter } from "@auth/prisma-adapter"
 import prisma from "@/libs/prisma/prisma"
 import authConfig from "@/libs/auth/auth.config"
 import { UserRole } from "@prisma/client"
-import { getAccountByProvider, createAccount } from "@/app/libs/services/account"
+import { getAccountByProvider, createAccount } from "@/app/libs/services/account/account"
 
 
 
@@ -25,17 +25,19 @@ if (!googleID || !googleSecret) {
 export const { handlers, signIn, signOut, auth } = NextAuth({
     adapter: PrismaAdapter(prisma),
     callbacks: {
-        async jwt({ token, user, account, profile }) {
+        async jwt({ token, user, account, profile, session, trigger }) {
             if (!token.sub) return token
 
             if (account?.provider !== "credentials") {
                 token.emailVerified = new Date()
+                token.isOAuthUser = true
             }
             if (user) {
                 token.role = user.role
                 token.username = user.username
                 token.createdAt = user.createdAt
                 token.isTwoFactorEnabled = user.isTwoFactorEnabled
+                token.hasPassword = !!user.password
             }
             if (account) {
                 token.accessToken = account.access_token
@@ -43,6 +45,16 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             if (profile) {
                 token.id = profile.id
             }
+
+            if (trigger === "update" && session) {
+                if (session.username) {
+                    token.username = session.username
+                }
+                if (session.hasPassword) {
+                    token.hasPassword = session.hasPassword
+                }
+            }
+
             return token
         },
         async session({ session, token }) {
@@ -53,6 +65,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 session.user.emailVerified = token.emailVerified as Date;
                 session.user.createdAt = token.createdAt as Date;
                 session.user.isTwoFactorEnabled = token.isTwoFactorEnabled as boolean;
+                session.user.isOAuthUser = token.isOAuthUser as boolean;
+                session.user.hasPassword = token.hasPassword as boolean;
             }
             return session
         },

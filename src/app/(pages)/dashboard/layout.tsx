@@ -1,9 +1,11 @@
+''
 import { clx } from "@/libs/utils/clx/clx-merge";
 import { User } from "@prisma/client";
-import { auth } from "@/libs/auth/next-auth";
 import DashboardHeader from "@/app/components/dashboard/header";
 import DashboardSidebar from "@/app/components/dashboard/sidebar";
 import type { Metadata } from "next";
+import { SessionProvider } from "next-auth/react"
+import useCurrentUser from "@/app/hooks/use-current-user";
 
 export const metadata: Metadata = {
     title: "Dashboard",
@@ -11,7 +13,6 @@ export const metadata: Metadata = {
 };
 
 const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
-    const session = await auth();
 
     const Dashboard = clx.div("flex flex-1");
     const DashboardContainer = clx.div(
@@ -19,14 +20,18 @@ const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
     );
 
     return (
-        <DashboardSidebar user={session?.user as User}>
-            <Dashboard>
-                <DashboardContainer>
-                    <DashboardHeader user={session?.user as User} />
-                    {children}
-                </DashboardContainer>
-            </Dashboard>
-        </DashboardSidebar>
+        <SessionProvider>
+            <DashboardSidebar>
+                <Dashboard>
+                    <DashboardContainer>
+                        <DashboardHeader />
+                        <div className="flex flex-1 gap-2">
+                            {children}
+                        </div>
+                    </DashboardContainer>
+                </Dashboard>
+            </DashboardSidebar>
+        </SessionProvider>
     );
 };
 

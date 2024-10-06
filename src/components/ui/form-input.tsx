@@ -5,7 +5,7 @@ import { FormField, FormItem, FormLabel, FormControl, FormMessage, FormDescripti
 import { Input, InputProps } from "@/components/ui/input";
 import { cn } from "@/libs/utils/core/cn";
 import { CheckCircle2, XCircle } from 'lucide-react';
-import { passwordCriteria } from '@/app/libs/definitions/signup';
+import { passwordCriteria } from '@/app/libs/schemas/signup';
 
 type MarginSize = 'none' | 'sm' | 'md' | 'lg';
 

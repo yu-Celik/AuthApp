@@ -2,20 +2,20 @@
 import { useForm } from "react-hook-form"
 import { Form, FormMessage } from "@/components/ui/form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { SigninFormSchema } from "@/app/libs/definitions/signin"
+import { SigninFormSchema } from "@/app/libs/schemas/signin"
 import { FormInput } from "@/components/ui/form-input"
 import { Card } from "@/components/ui/card"
 import FooterForm from "@/app/components/auth/footer-form"
 import Or from "@/app/components/auth/or"
 import ResendButton from "@/app/components/auth/auth-buttons/resend"
-import { useState, useTransition, useCallback, useEffect } from 'react'
+import { useState, useTransition, useCallback } from 'react'
 import SubmitButton from "@/app/components/auth/submit-button"
 import { FlexCol } from "@/components/ui/containers"
 import { z } from "zod"
-import TwoFactorForm from './two-factor-form'
-import { signin } from "@/app/server-actions/auth"
+import TwoFactorForm from '@/app/ui/auth/two-factor-form'
+import { signin } from "@/app/server-actions/sign-in"
 import BackLogin from "@/app/components/auth/back-login"
-import { FormErrors } from "@/app/types/definitions/type"
+import { FormErrors } from "@/app/libs/definitions/form-types"
 import GithubSignInButton from '@/app/components/auth/auth-buttons/github'
 import GoogleSignInButton from '@/app/components/auth/auth-buttons/google'
 import Link from "next/link"

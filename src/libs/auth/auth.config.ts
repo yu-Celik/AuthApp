@@ -1,3 +1,4 @@
+
 import type { NextAuthConfig } from "next-auth"
 import { CredentialsSignin } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
@@ -7,9 +8,9 @@ import GoogleProvider from "next-auth/providers/google"
 import bcrypt from "bcryptjs"
 // import Resend from "next-auth/providers/resend"
 import prisma from "@/libs/prisma/prisma"
-import { generateTwoFactorToken } from "@/app/libs/services/generate-tokens"
-import { sendTwoFactorEmail } from "@/app/libs/mails/two-factor-email"
-import { verifyTwoFactorCode } from "@/app/libs/services/verify-two-factor-code"
+import { generateTwoFactorToken } from "@/app/libs/services/token/generate-tokens"
+import { sendTwoFactorEmail } from "@/app/libs/emails/two-factor-email"
+import { verifyTwoFactorCode } from "@/app/libs/services/auth/verify-two-factor-code"
 
 export default {
     providers: [
@@ -49,6 +50,7 @@ export default {
                 } else {
                     throw new CredentialsSignin({ cause: "Méthode de connexion non valide pour ce compte" });
                 }
+
                 if (user.isTwoFactorEnabled) {
                     if (credentials.twoFactorCode && credentials.twoFactorCode !== 'null' && typeof credentials.twoFactorCode === 'string') {
                         const twoFactorCode = await verifyTwoFactorCode(user, credentials.twoFactorCode);
@@ -62,8 +64,8 @@ export default {
                     }
                 }
                 return user;
-            }
 
+            }
         }),
         GithubProvider,
         GoogleProvider,

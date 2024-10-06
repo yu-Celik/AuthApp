@@ -14,6 +14,9 @@ declare module "next-auth" {
             createdAt?: Date | null
             emailVerified?: Date | null
             isTwoFactorEnabled?: boolean
+            isOAuthUser?: boolean
+            hasPassword?: boolean
+            password?: string
         }
     }
 
@@ -24,6 +27,9 @@ declare module "next-auth" {
         role?: UserRole
         username?: string
         isTwoFactorEnabled?: boolean
+        isOAuthUser?: boolean
+        hasPassword?: boolean
+        password?: string
     }
 
     interface User extends DefaultUser {
@@ -32,5 +38,8 @@ declare module "next-auth" {
         emailVerified?: boolean
         createdAt?: Date | null
         isTwoFactorEnabled?: boolean
+        isOAuthUser?: boolean
+        hasPassword?: boolean
+        password?: string
     }
 }

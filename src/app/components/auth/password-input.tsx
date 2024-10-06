@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { SignupFormSchema } from '@/app/libs/definitions/signup';
+import { SignupFormSchema } from '@/app/libs/schemas/signup';
 import { z } from 'zod';
 
 interface PasswordInputProps {

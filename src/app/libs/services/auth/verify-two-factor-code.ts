@@ -1,4 +1,6 @@
-import { getTwoFactorTokenByEmail } from "@/app/libs/services/two-factor-token";
+'use server'
+
+import { getTwoFactorTokenByEmail } from "@/app/libs/services/token/two-factor-token";
 import prisma from "@/libs/prisma/prisma";
 import { User } from "@prisma/client";
 

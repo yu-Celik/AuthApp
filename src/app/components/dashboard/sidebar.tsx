@@ -11,13 +11,14 @@ import UserPlus from "@/components/icons/user-plus";
 import { Sidebar, SidebarBody, SidebarLink } from "@/components/ui/sidebar";
 import { User } from "@prisma/client";
 import Image from "next/image";
+import useCurrentUser from "@/app/hooks/use-current-user";
 
 type Props = {
-    user: User
     children: ReactNode
 }
-function DashboardSidebar({ children, user }: Props) {
+function DashboardSidebar({ children }: Props) {
     const [open, setOpen] = useState(false);
+    const { user } = useCurrentUser();
 
     return (
         <div
@@ -29,7 +30,7 @@ function DashboardSidebar({ children, user }: Props) {
             <Sidebar open={open} setOpen={setOpen}>
                 <SidebarBody className="justify-between gap-10">
                     <div className="flex flex-col flex-1 overflow-x-hidden overflow-y-auto">
-                        {open ? <SidebarLogo user={user} /> : <SidebarLogoIcon user={user} />}
+                        {open ? <SidebarLogo user={user as User} /> : <SidebarLogoIcon user={user as User} />}
                         <div className="flex flex-col gap-2 mt-8">
                             {LINKS_ITEMS.map((link, idx) => (
                                 <SidebarLink key={idx} link={link} onClick={link.onClick} />
@@ -49,7 +50,7 @@ const SidebarLogo = ({ user }: { user: User }) => {
             href="#"
             className="relative z-20 flex items-center py-1 space-x-2 text-sm font-normal text-black"
         >
-            {user.image ? (
+            {user?.image ? (
                 <Image src={user.image} alt="Photo de profil" width={24} height={24} className="rounded-full flex-shrink-0 w-6 h-6" />
             ) : (
                 <div className="flex-shrink-0 w-6 h-6 bg-black rounded-tl-lg rounded-tr-sm rounded-bl-sm rounded-br-lg dark:bg-white" />
@@ -60,7 +61,7 @@ const SidebarLogo = ({ user }: { user: User }) => {
                 animate={{ opacity: 1 }}
                 className="font-medium text-black whitespace-pre dark:text-white "
             >
-                { user.username ? user.username.charAt(0).toUpperCase() + user.username.slice(1) : "Utilisateur" }
+                { user?.username ? user.username.charAt(0).toUpperCase() + user.username.slice(1) : "Utilisateur" }
             </motion.span>
         </Link>
     );
@@ -71,7 +72,7 @@ const SidebarLogoIcon = ({ user }: { user: User }) => {
             href="#"
             className="relative z-20 flex items-center py-1 space-x-2 text-sm font-normal text-black"
         >
-            {user.image ? (
+            {user?.image ? (
                 <Image src={user.image} alt="Photo de profil" width={24} height={24} className="rounded-full flex-shrink-0 w-6 h-6" />
             ) : (
                 <div className="flex-shrink-0 w-6 h-6 bg-black rounded-tl-lg rounded-tr-sm rounded-bl-sm rounded-br-lg dark:bg-white" />
@@ -83,17 +84,12 @@ const SidebarLogoIcon = ({ user }: { user: User }) => {
 const LINKS_ITEMS = [
     {
         label: "Dashboard",
-        href: "#",
+        href: "/dashboard/accueil",
         icon: <Terminal className="flex-shrink-0 size-5" />,
     },
     {
-        label: "Profile",
-        href: "#",
-        icon: <UserPlus className="flex-shrink-0 size-5" />,
-    },
-    {
         label: "Settings",
-        href: "#",
+        href: "/dashboard/setting",
         icon: <SettingsIcon className="flex-shrink-0 size-5" />,
     },
     {

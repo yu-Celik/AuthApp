@@ -1,11 +1,11 @@
+'use server'
+
 import prisma from "@/libs/prisma/prisma";
 
-export const getTwoFactorTokenByToken= async (token: string) => {
+export const getTwoFactorTokenByToken = async (token: string) => {
     try {
         const twoFactorToken = await prisma.twoFactorToken.findUnique({
-            where: {
-            token: token,
-        },
+            where: { token },
         });
         return twoFactorToken;
     } catch (error) {
@@ -17,9 +17,7 @@ export const getTwoFactorTokenByToken= async (token: string) => {
 export const getTwoFactorTokenByEmail = async (email: string) => {
     try {
         const twoFactorToken = await prisma.twoFactorToken.findFirst({
-            where: {
-                email: email,
-            },
+            where: { email },
         });
         return twoFactorToken;
     } catch (error) {

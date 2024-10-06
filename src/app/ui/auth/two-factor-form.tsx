@@ -3,11 +3,11 @@
 import { useState, useEffect, useTransition, useCallback } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { SigninFormSchema } from '@/app/libs/definitions/signin'
-import { Form, FormMessage } from "@/components/ui/form"
-import { FormErrors } from '@/app/types/definitions/type'
+import { SigninFormSchema } from '@/app/libs/schemas/signin'
+import { Form } from "@/components/ui/form"
+import { FormErrors } from '@/app/libs/definitions/form-types'
 import { FormInput } from '@/components/ui/form-input'
-import { resendTwoFactorEmail } from '@/app/libs/mails/two-factor-email'
+import { resendTwoFactorEmail } from '@/app/libs/emails/two-factor-email'
 import { TwoFactorCodeInput } from '@/app/components/auth/two-factor-code-input'
 import SubmitButton from "@/app/components/auth/submit-button"
 

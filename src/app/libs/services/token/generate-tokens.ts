@@ -1,9 +1,11 @@
+'use server'
+
 import crypto from 'crypto'
 import { v4 as uuidv4 } from 'uuid'
-import { getVerificationTokenByEmail } from '@/app/libs/services/get-verification-token'
+import { getVerificationTokenByEmail } from '@/app/libs/services/token/get-verification-token'
 import prisma from '@/libs/prisma/prisma'
-import { getPasswordResetTokenByEmail } from '@/app/libs/services/password-reset-token'
-import { getTwoFactorTokenByEmail } from '@/app/libs/services/two-factor-token'
+import { getPasswordResetTokenByEmail } from '@/app/libs/services/token/password-reset-token'
+import { getTwoFactorTokenByEmail } from '@/app/libs/services/token/two-factor-token'
 
 
 export async function generateVerificationToken(email: string) {

@@ -1,7 +1,7 @@
 "use server"
 import { Resend } from 'resend'
-import { TwoFactorEmail } from '@/app/components/mails/two-factor-email'
-import { generateTwoFactorToken } from '@/app/libs/services/generate-tokens'
+import { TwoFactorEmail } from '@/app/components/emails/two-factor-email'
+import { generateTwoFactorToken } from '@/app/libs/services/token/generate-tokens'
 
 export async function sendTwoFactorEmail(email: string, token: string) {
     const resend = new Resend(process.env.AUTH_RESEND_KEY)

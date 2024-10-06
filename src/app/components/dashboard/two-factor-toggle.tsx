@@ -1,7 +1,7 @@
 "use client"
 import { useState, useTransition } from 'react'
 import { Button } from "@/components/ui/button"
-import { updateTwoFactorStatus } from "@/app/server-actions/update-two-factor"
+import { updateTwoFactorStatus } from "@/app/libs/services/user/update-two-factor"
 import { Loader2 } from "lucide-react"
 import { useToast } from "@/components/ui/use-toast"
 

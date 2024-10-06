@@ -5,14 +5,14 @@ import { useSearchParams, useRouter } from "next/navigation"
 import { Card } from "@/components/ui/card"
 import { Form, FormMessage } from "@/components/ui/form"
 import SubmitButton from '@/app/components/auth/submit-button'
-import { newPassword } from "@/app/server-actions/auth"
+import { newPassword } from "@/app/server-actions/new-password"
 import BackLogin from "@/app/components/auth/back-login"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { FormInput } from "@/components/ui/form-input"
 import { useFormState } from "react-dom"
-import { SignupFormSchema } from "@/app/libs/definitions/signup"
+import { SignupFormSchema } from "@/app/libs/schemas/signup"
 
 const PasswordSchema = z.object({
     password: SignupFormSchema.shape.password,

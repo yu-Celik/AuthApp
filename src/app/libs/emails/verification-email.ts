@@ -1,8 +1,8 @@
 "use server"
 import { Resend } from 'resend'
-import { generateVerificationToken } from '@/app/libs/services/generate-tokens'
-import { isEmailVerified } from '@/app/libs/services/get-user'
-import { VerificationEmail } from '@/app/components/mails/verification-email'
+import { generateVerificationToken } from '@/app/libs/services/token/generate-tokens'
+import { isEmailVerified } from '@/app/libs/services/user/get-user'
+import { VerificationEmail } from '@/app/components/emails/verification-email'
 export async function sendVerificationEmail(email: string, token: string) {
     const resend = new Resend(process.env.AUTH_RESEND_KEY)
     const confirmLink = `${process.env.NEXTAUTH_URL}/auth/new-verification?token=${token}`

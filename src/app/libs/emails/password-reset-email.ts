@@ -1,7 +1,7 @@
 "use server"
 import { Resend } from 'resend'
-import { generatePasswordResetToken } from '@/app/libs/services/generate-tokens'
-import { PasswordResetEmail } from '@/app/components/mails/password-reset-email'
+import { generatePasswordResetToken } from '@/app/libs/services/token/generate-tokens'
+import { PasswordResetEmail } from '@/app/components/emails/password-reset-email'
 
 export async function sendPasswordResetEmail(email: string, token: string) {
     const resend = new Resend(process.env.AUTH_RESEND_KEY)
