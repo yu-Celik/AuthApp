@@ -75,7 +75,6 @@ const FocusScope = React.forwardRef<FocusScopeElement, FocusScopeProps>(
     // Takes care of trapping focus if focus is moved outside programmatically for example
     React.useEffect(() => {
       if (trapped) {
-        // @ts-expect-error: Move function declaration to function body root
         // eslint-disable-next-line no-inner-declarations
         function handleFocusIn(event: FocusEvent) {
           if (focusScope.paused || !container) {
@@ -89,7 +88,6 @@ const FocusScope = React.forwardRef<FocusScopeElement, FocusScopeProps>(
           }
         }
 
-        // @ts-expect-error: Move function declaration to function body root
         // eslint-disable-next-line no-inner-declarations
         function handleFocusOut(event: FocusEvent) {
           if (focusScope.paused || !container) {
@@ -122,7 +120,6 @@ const FocusScope = React.forwardRef<FocusScopeElement, FocusScopeProps>(
         // back to the document.body. In this case, we move focus to the container
         // to keep focus trapped correctly.
 
-        // @ts-expect-error: Move function declaration to function body root
         // eslint-disable-next-line no-inner-declarations
         function handleMutations(mutations: MutationRecord[]) {
           const focusedElement = document.activeElement as HTMLElement | null;
